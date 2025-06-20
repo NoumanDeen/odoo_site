@@ -1,0 +1,75 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Website & eCommerce Development with Odoo in Saudi Arabia",
+  "description": "Development of integrated websites and e-commerce stores with Odoo to provide an exceptional customer experience",
+  "provider": {
+    "@type": "Organization",
+    "name": "ToDoOps",
+    "url": "https://your-domain.com"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Saudi Arabia"
+  }
+};
+---
+
+<Layout 
+  title="Website & eCommerce Development - ToDoOps | Odoo Websites in Saudi Arabia"
+  lang="en" 
+  description="Development of integrated websites and e-commerce stores with Odoo to provide an exceptional customer experience. Website development, e-commerce stores, and Odoo integration."
+>
+  <Fragment slot="head">
+    <meta name="keywords" content="Odoo websites, Odoo ecommerce, website development, online stores, Odoo Saudi Arabia, integrated websites" />
+    <meta property="og:title" content="Website & eCommerce Development - ToDoOps" />
+    <meta property="og:description" content="Development of integrated websites and e-commerce stores with Odoo to provide an exceptional customer experience" />
+    <link rel="canonical" href="https://your-domain.com/en/services/website-ecommerce" />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  </Fragment>
+
+  <Header lang="en" />
+  
+  <main class="py-20 bg-white min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Hero Section -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl lg:text-5xl font-bold text-dark-900 mb-6">
+          Website & eCommerce Development
+        </h1>
+        <p class="text-xl text-odoo-purple font-medium mb-6">
+          Integrated websites and e-commerce stores with Odoo
+        </p>
+        <p class="text-lg text-dark-600 max-w-4xl mx-auto leading-relaxed">
+          We provide website and e-commerce store development services integrated with Odoo to provide an exceptional customer experience with conversion optimization and enhanced online sales.
+        </p>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="bg-gradient-to-r from-odoo-purple to-purple-800 rounded-2xl p-8 text-white text-center">
+        <h2 class="text-3xl font-bold mb-4">
+          Start Your Website Project
+        </h2>
+        <p class="text-xl mb-6 text-purple-100">
+          Talk to us to develop a website or e-commerce store integrated with Odoo
+        </p>
+        <a 
+          href="/en/contact"
+          class="inline-flex items-center bg-white text-odoo-purple px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-200 shadow-lg"
+        >
+          Start Website Project
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Footer lang="en" />
+</Layout>

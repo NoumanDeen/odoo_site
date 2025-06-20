@@ -1,0 +1,295 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { industries, getIndustryBySlug } from '../../../data/industries';
+
+export function getStaticPaths() {
+  return industries.map(industry => ({
+    params: { industrySlug: industry.slug },
+    props: { industry }
+  }));
+}
+
+const { industry } = Astro.props;
+const { en } = industry;
+
+// Generate JSON-LD structured data
+const structuredData = en.structuredData;
+
+// Add FAQ schema
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": `How can Odoo ERP help ${en.name} companies?`,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": en.fullDescription
+      }
+    },
+    {
+      "@type": "Question",
+      "name": `What are the main challenges facing ${en.name} companies in Saudi Arabia?`,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": en.challenges.map(c => `${c.title}: ${c.description}`).join(' ')
+      }
+    },
+    {
+      "@type": "Question",
+      "name": `Which Odoo modules are most suitable for ${en.name} companies?`,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": en.solutions.map(s => `${s.title}: ${s.description}`).join(' ')
+      }
+    },
+    {
+      "@type": "Question",
+      "name": `What are the benefits of implementing Odoo ERP in the ${en.name} sector?`,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": en.benefits.map(b => `${b.title}: ${b.description}`).join(' ')
+      }
+    }
+  ]
+};
+---
+
+<Layout 
+  title={en.seo.title}
+  lang="en" 
+  description={en.seo.description}
+>
+  <Fragment slot="head">
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content={en.seo.keywords} />
+    <meta property="og:title" content={en.seo.title} />
+    <meta property="og:description" content={en.seo.description} />
+    <meta property="og:type" content="website" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={`https://your-domain.com/en/industries/${industry.slug}`} />
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+  </Fragment>
+
+  <Header lang="en" />
+  
+  <main class="py-20 bg-white min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="mb-8" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2 text-sm text-dark-600">
+          <li>
+            <a href="/en" class="hover:text-odoo-purple transition-colors duration-200">Home</a>
+          </li>
+          <li>
+            <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </li>
+          <li>
+            <a href="/en/industries" class="hover:text-odoo-purple transition-colors duration-200">Industries</a>
+          </li>
+          <li>
+            <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </li>
+          <li class="text-dark-900 font-medium">{en.name}</li>
+        </ol>
+      </nav>
+
+      <!-- Hero Section -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl lg:text-5xl font-bold text-dark-900 mb-6">
+          Odoo ERP Solutions for {en.name}
+        </h1>
+        <p class="text-xl text-odoo-purple font-medium mb-6">
+          Specialized solutions meeting the needs of {en.name} sector in Saudi Arabia
+        </p>
+        <p class="text-lg text-dark-600 max-w-4xl mx-auto leading-relaxed">
+          {en.fullDescription}
+        </p>
+      </div>
+
+      <!-- Challenges Section -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-dark-900 text-center mb-12">
+          Challenges Facing the {en.name} Sector
+        </h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          {en.challenges.map((challenge, index) => (
+            <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+              <div class="w-12 h-12 bg-odoo-accent/20 rounded-lg flex items-center justify-center mb-4">
+                <span class="text-xl font-bold text-odoo-purple">{index + 1}</span>
+              </div>
+              <h3 class="text-xl font-bold text-dark-900 mb-3">
+                {challenge.title}
+              </h3>
+              <p class="text-dark-600 leading-relaxed">
+                {challenge.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Solutions Section -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-dark-900 text-center mb-12">
+          Odoo ERP Solutions for {en.name}
+        </h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          {en.solutions.map((solution, index) => (
+            <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+              <div class={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${
+                index === 0 ? 'bg-odoo-accent/20' :
+                index === 1 ? 'bg-green-100' :
+                index === 2 ? 'bg-blue-100' : 'bg-orange-100'
+              }`}>
+                <svg class={`w-6 h-6 ${
+                  index === 0 ? 'text-odoo-purple' :
+                  index === 1 ? 'text-green-600' :
+                  index === 2 ? 'text-blue-600' : 'text-orange-600'
+                }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {index === 0 && (
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  )}
+                  {index === 1 && (
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                  )}
+                  {index === 2 && (
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                  )}
+                  {index === 3 && (
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  )}
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-dark-900 mb-3">
+                {solution.title}
+              </h3>
+              <p class="text-dark-600 mb-4 leading-relaxed">
+                {solution.description}
+              </p>
+              {solution.modules && (
+                <div class="flex flex-wrap gap-2">
+                  {solution.modules.map((module) => (
+                    <span class="bg-gray-100 text-dark-700 px-3 py-1 rounded-full text-sm font-medium">
+                      {module}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Benefits Section -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-dark-900 text-center mb-12">
+          Benefits of Odoo ERP for {en.name}
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {en.benefits.map((benefit, index) => (
+            <div class="text-center bg-gradient-to-br from-gray-50 to-odoo-accent/10 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
+              <div class={`w-16 h-16 mx-auto mb-6 rounded-xl flex items-center justify-center ${
+                index === 0 ? 'bg-odoo-accent/20' : 
+                index === 1 ? 'bg-green-100' : 
+                index === 2 ? 'bg-blue-100' : 'bg-orange-100'
+              }`}>
+                <svg class={`w-8 h-8 ${
+                  index === 0 ? 'text-odoo-purple' :
+                  index === 1 ? 'text-green-600' :
+                  index === 2 ? 'text-blue-600' : 'text-orange-600'
+                }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {index === 0 && (
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                  )}
+                  {index === 1 && (
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  )}
+                  {index === 2 && (
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  )}
+                  {index === 3 && (
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                  )}
+                </svg>
+              </div>
+              <h4 class="text-xl font-bold text-dark-900 mb-4">
+                {benefit.title}
+              </h4>
+              <p class="text-dark-600 leading-relaxed">
+                {benefit.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-dark-900 text-center mb-12">
+          Frequently Asked Questions about Odoo ERP for {en.name}
+        </h2>
+        <div class="max-w-4xl mx-auto space-y-6">
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <h3 class="text-xl font-bold text-dark-900 mb-3">How can Odoo ERP help {en.name} companies?</h3>
+            <p class="text-dark-600">{en.fullDescription}</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <h3 class="text-xl font-bold text-dark-900 mb-3">What are the main challenges facing {en.name} companies in Saudi Arabia?</h3>
+            <p class="text-dark-600">{en.name} companies in Saudi Arabia face several challenges such as {en.challenges[0].title.toLowerCase()} and {en.challenges[1].title.toLowerCase()}. Odoo ERP provides integrated solutions to address these challenges.</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <h3 class="text-xl font-bold text-dark-900 mb-3">Which Odoo modules are most suitable for {en.name} companies?</h3>
+            <p class="text-dark-600">The main Odoo modules suitable for {en.name} companies include: {en.solutions.map(s => s.modules && s.modules[0]).filter(Boolean).join(', ')}, and other specialized modules.</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <h3 class="text-xl font-bold text-dark-900 mb-3">How long does it take to implement Odoo ERP in {en.name} companies?</h3>
+            <p class="text-dark-600">Implementation time depends on the company size and complexity of operations. It typically takes 2-4 months for small and medium companies, and 4-8 months for large companies.</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <h3 class="text-xl font-bold text-dark-900 mb-3">What are the benefits of implementing Odoo ERP in the {en.name} sector?</h3>
+            <p class="text-dark-600">The main benefits include: {en.benefits.map(b => b.title).join(', ')}, leading to improved overall company performance and increased competitiveness.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="bg-gradient-to-r from-odoo-purple to-purple-800 rounded-2xl p-8 text-white text-center">
+        <h2 class="text-3xl font-bold mb-4">
+          Ready to Transform Your {en.name} Business?
+        </h2>
+        <p class="text-xl mb-6 text-purple-100">
+          Get a free consultation from our experts specialized in the {en.name} sector
+        </p>
+        <a 
+          href="/en/contact"
+          class="inline-flex items-center bg-white text-odoo-purple px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-200 shadow-lg"
+        >
+          Book Free Consultation
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Footer lang="en" />
+</Layout>
+
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

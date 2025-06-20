@@ -1,0 +1,132 @@
+---
+export interface Props {
+  size?: number;
+  className?: string;
+  variant?: 'default' | 'white' | 'dark';
+}
+
+const { size = 48, className = '', variant = 'default' } = Astro.props;
+
+// Color variants for different backgrounds
+const colors = {
+  default: {
+    primary: '#8B5A8C', // Main purple from the logo
+    secondary: '#A569A6', // Lighter purple
+    accent: '#9CA3AF', // Grey for connection dots
+    text: '#8B5A8C', // Purple for text
+    techText: '#8B5A8C' // Purple for TECH text
+  },
+  white: {
+    primary: '#8B5A8C',
+    secondary: '#A569A6', 
+    accent: '#E5E7EB',
+    text: 'white',
+    techText: 'white'
+  },
+  dark: {
+    primary: '#8B5A8C',
+    secondary: '#A569A6',
+    accent: '#9CA3AF',
+    text: '#8B5A8C',
+    techText: '#8B5A8C'
+  }
+};
+
+const currentColors = colors[variant];
+const logoWidth = size * 2.2;
+---
+
+<div class={`todoops-logo-container ${className}`} style={`width: ${logoWidth}px; height: ${size}px;`}>
+  <svg 
+    width={logoWidth} 
+    height={size} 
+    viewBox="0 0 106 48"
+    class="todoops-logo"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <!-- Main triangular logo mark -->
+    <g class="logo-mark" transform="translate(0, 2)">
+      <!-- Triangle frame structure -->
+      <path d="M20 2 L2 38 L38 38 Z" fill="none" stroke={currentColors.primary} stroke-width="6" stroke-linejoin="round"/>
+      
+      <!-- Inner triangle sections -->
+      <path d="M20 8 L8 32 L32 32 Z" fill={currentColors.primary} opacity="0.8"/>
+      
+      <!-- Connection nodes/dots -->
+      <circle cx="20" cy="2" r="3" fill={currentColors.primary} />
+      <circle cx="11" cy="25" r="2.5" fill={currentColors.accent} />
+      <circle cx="29" cy="25" r="2.5" fill={currentColors.accent} />
+      <circle cx="2" cy="38" r="3" fill={currentColors.accent} />
+      <circle cx="38" cy="38" r="3" fill={currentColors.accent} />
+      <circle cx="14" cy="35" r="2" fill={currentColors.accent} />
+      <circle cx="26" cy="35" r="2" fill={currentColors.accent} />
+      <circle cx="20" cy="28" r="2" fill={currentColors.accent} />
+      <circle cx="20" cy="18" r="1.5" fill={currentColors.accent} />
+      
+      <!-- Connection lines -->
+      <line x1="20" y1="2" x2="11" y2="25" stroke={currentColors.accent} stroke-width="1.5" opacity="0.7" />
+      <line x1="20" y1="2" x2="29" y2="25" stroke={currentColors.accent} stroke-width="1.5" opacity="0.7" />
+      <line x1="11" y1="25" x2="14" y2="35" stroke={currentColors.accent} stroke-width="1.5" opacity="0.7" />
+      <line x1="29" y1="25" x2="26" y2="35" stroke={currentColors.accent} stroke-width="1.5" opacity="0.7" />
+      <line x1="14" y1="35" x2="26" y2="35" stroke={currentColors.accent} stroke-width="1.5" opacity="0.7" />
+      <line x1="20" y1="18" x2="20" y2="28" stroke={currentColors.accent} stroke-width="1.5" opacity="0.7" />
+      
+      <!-- TECH text inside triangle -->
+      <text 
+        x="20" 
+        y="24" 
+        font-family="Inter, system-ui, sans-serif" 
+        font-size="5" 
+        font-weight="700" 
+        fill={currentColors.techText}
+        text-anchor="middle"
+        letter-spacing="0.8px"
+      >
+        TECH
+      </text>
+    </g>
+    
+    <!-- ToDoOps text -->
+    <g class="logo-text" transform="translate(0, 32)">
+      <text 
+        x="0" 
+        y="12" 
+        font-family="Inter, system-ui, sans-serif" 
+        font-size="14" 
+        font-weight="700" 
+        fill={currentColors.text}
+        letter-spacing="-0.3px"
+      >
+        ToDoOps
+      </text>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .todoops-logo-container {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .todoops-logo {
+    transition: all 0.3s ease;
+  }
+  
+  .todoops-logo:hover .logo-mark {
+    transform: translate(0, 2px) scale(1.02);
+  }
+  
+  .todoops-logo:hover {
+    filter: drop-shadow(0 4px 8px rgba(139, 90, 140, 0.2));
+  }
+  
+  /* RTL support */
+  [dir="rtl"] .logo-text {
+    transform: translate(-40px, 32px) scale(-1, 1);
+  }
+  
+  [dir="rtl"] .logo-text text {
+    transform: scale(-1, 1);
+  }
+</style>

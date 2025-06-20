@@ -1,0 +1,146 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { supabase } from '../../../lib/supabase';
+
+// Fetch blog posts with translations
+const { data: posts } = await supabase
+  .from('blog_posts')
+  .select(`
+    id,
+    slug,
+    published_at,
+    blog_post_translations!inner(title)
+  `)
+  .eq('blog_post_translations.lang', 'ar')
+  .order('published_at', { ascending: false });
+
+const blogPosts = posts || [];
+---
+
+<Layout 
+  title="ادارة المقالات - لوحة التحكم" 
+  lang="ar"
+>
+  <Header lang="ar" />
+  
+  <main class="py-20 bg-gray-50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-xl p-8 shadow-lg">
+        <div class="flex justify-between items-center mb-8">
+          <h1 class="text-3xl font-bold text-dark-900">ادارة المقالات</h1>
+          <a 
+            href="/admin/blog/new-post" 
+            class="bg-odoo-purple text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-800 transition-colors duration-200"
+          >
+            اضافة مقال جديد
+          </a>
+        </div>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse">
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-200">
+                <th class="px-6 py-3 text-right text-xs font-medium text-dark-500 uppercase tracking-wider">العنوان</th>
+                <th class="px-6 py-3 text-right text-xs font-medium text-dark-500 uppercase tracking-wider">الرابط</th>
+                <th class="px-6 py-3 text-right text-xs font-medium text-dark-500 uppercase tracking-wider">تاريخ النشر</th>
+                <th class="px-6 py-3 text-right text-xs font-medium text-dark-500 uppercase tracking-wider">الاجراءات</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              {blogPosts.map(post => (
+                <tr class="hover:bg-gray-50">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-dark-900">
+                    {post.blog_post_translations[0]?.title}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-dark-600">
+                    <a 
+                      href={`/blog/${post.slug}`} 
+                      target="_blank" 
+                      class="text-odoo-purple hover:underline"
+                    >
+                      {post.slug}
+                    </a>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-dark-600">
+                    {new Date(post.published_at).toLocaleDateString('ar-SA')}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-dark-600">
+                    <div class="flex space-x-2 rtl:space-x-reverse">
+                      <a 
+                        href={`/admin/blog/edit-post/${post.slug}`}
+                        class="text-blue-600 hover:text-blue-800"
+                      >
+                        تعديل
+                      </a>
+                      <button 
+                        class="text-red-600 hover:text-red-800 delete-post-btn"
+                        data-post-id={post.id}
+                        data-post-title={post.blog_post_translations[0]?.title}
+                      >
+                        حذف
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              
+              {blogPosts.length === 0 && (
+                <tr>
+                  <td colspan="4" class="px-6 py-4 text-center text-dark-600">
+                    لا توجد مقالات بعد. قم باضافة مقال جديد.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer lang="ar" />
+</Layout>
+
+<script>
+  import { createClient } from '@supabase/supabase-js';
+  
+  // Initialize Supabase client
+  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const deleteButtons = document.querySelectorAll('.delete-post-btn');
+    
+    deleteButtons.forEach(button => {
+      button.addEventListener('click', async function() {
+        const postId = this.getAttribute('data-post-id');
+        const postTitle = this.getAttribute('data-post-title');
+        
+        if (!postId) return;
+        
+        // Confirm deletion
+        if (confirm(`هل انت متاكد من حذف المقال "${postTitle}"؟`)) {
+          try {
+            // Delete post (cascade will handle related records)
+            const { error } = await supabase
+              .from('blog_posts')
+              .delete()
+              .eq('id', postId);
+              
+            if (error) throw error;
+            
+            // Refresh the page
+            window.location.reload();
+            
+          } catch (error) {
+            console.error('Error deleting post:', error);
+            alert('حدث خطا اثناء حذف المقال. يرجى المحاولة مرة اخرى.');
+          }
+        }
+      });
+    });
+  });
+</script>

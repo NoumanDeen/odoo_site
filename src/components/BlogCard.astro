@@ -1,0 +1,145 @@
+---
+export interface Props {
+  post: {
+    id: string;
+    slug: string;
+    title: string;
+    meta_description: string;
+    published_at: string;
+    image_url: string;
+    author_name: string;
+    category?: {
+      name: string;
+      slug: string;
+    };
+    tags?: Array<{
+      name: string;
+      slug: string;
+    }>;
+  };
+  lang: 'ar' | 'en';
+  priority?: boolean;
+}
+
+const { post, lang, priority = false } = Astro.props;
+
+// Format date
+const formatDate = (dateString: string, lang: 'ar' | 'en') => {
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  };
+  
+  if (lang === 'ar') {
+    return date.toLocaleDateString('ar-SA', options);
+  } else {
+    return date.toLocaleDateString('en-US', options);
+  }
+};
+
+const blogPath = lang === 'ar' ? '/blog' : '/en/blog';
+
+// Optimize image URL if possible
+const optimizeImageUrl = (url: string) => {
+  // For Pexels images, we can use their API to get optimized versions
+  if (url.includes('pexels.com')) {
+    // Check if the URL already has parameters
+    const hasParams = url.includes('?');
+    // Add auto compression and size parameters
+    return `${url}${hasParams ? '&' : '?'}auto=compress&cs=tinysrgb&w=600`;
+  }
+  return url;
+};
+
+const optimizedImageUrl = optimizeImageUrl(post.image_url);
+---
+
+<article 
+  class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group"
+>
+  <!-- Image -->
+  <div class="relative h-48 overflow-hidden">
+    <img 
+      src={optimizedImageUrl} 
+      alt={post.title}
+      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+      loading={priority ? "eager" : "lazy"}
+      width="600"
+      height="300"
+      decoding="async"
+    />
+    {post.category && (
+      <div class="absolute top-4 left-4">
+        <a href={`${blogPath}/category/${post.category.slug}`} class="bg-odoo-purple text-white px-3 py-1 rounded-full text-sm font-medium hover:bg-purple-800 transition-colors duration-200">
+          {post.category.name}
+        </a>
+      </div>
+    )}
+  </div>
+
+  <!-- Content -->
+  <div class="p-6">
+    <!-- Meta info -->
+    <div class="flex items-center justify-between text-sm text-dark-500 mb-3">
+      <span>{formatDate(post.published_at, lang)}</span>
+      <span>{post.author_name}</span>
+    </div>
+
+    <!-- Title -->
+    <h3 class="text-xl font-bold text-dark-900 mb-3 line-clamp-2 group-hover:text-odoo-purple transition-colors duration-200">
+      <a href={`${blogPath}/${post.slug}`} class="hover:underline">
+        {post.title}
+      </a>
+    </h3>
+
+    <!-- Description -->
+    <p class="text-dark-600 mb-4 line-clamp-3 leading-relaxed">
+      {post.meta_description}
+    </p>
+
+    <!-- Tags -->
+    {post.tags && post.tags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-4">
+        {post.tags.slice(0, 3).map((tag) => (
+          <span class="tag bg-gray-100 text-dark-700 px-2 py-1 rounded text-xs font-medium">
+            {tag.name}
+          </span>
+        ))}
+        {post.tags.length > 3 && (
+          <span class="text-dark-500 text-xs font-medium">
+            +{post.tags.length - 3} {lang === 'ar' ? 'المزيد' : 'more'}
+          </span>
+        )}
+      </div>
+    )}
+
+    <!-- Read more link -->
+    <a 
+      href={`${blogPath}/${post.slug}`}
+      class="inline-flex items-center text-odoo-purple hover:text-purple-800 font-medium transition-colors duration-200"
+    >
+      {lang === 'ar' ? 'اقرا المزيد' : 'Read More'}
+      <svg class={`w-4 h-4 ml-2 rtl:ml-0 rtl:mr-2 ${lang === 'ar' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+      </svg>
+    </a>
+  </div>
+</article>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

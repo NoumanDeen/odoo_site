@@ -1,0 +1,149 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "تخصيص وتطوير اودو ERP في السعودية",
+  "description": "خدمات تطوير حلول مخصصة وتعديل اودو ليتناسب مع احتياجاتك الخاصة وعمليات عملك الفريدة",
+  "provider": {
+    "@type": "Organization",
+    "name": "ToDoOps",
+    "url": "https://todoops.com"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Saudi Arabia"
+  }
+};
+---
+
+<Layout 
+  title="تخصيص وتطوير اودو - ToDoOps | حلول اودو ERP المخصصة في السعودية"
+  lang="ar" 
+  description="خدمات تطوير حلول مخصصة وتعديل اودو ليتناسب مع احتياجاتك الخاصة. تطوير مخصص، انشاء تقارير، تكامل APIs، وتطوير الوحدات."
+>
+  <Fragment slot="head">
+    <meta name="keywords" content="تخصيص اودو, تطوير اودو, حلول مخصصة, تطوير ERP, اودو السعودية, تطوير الوحدات" />
+    <meta property="og:title" content="تخصيص وتطوير اودو - ToDoOps" />
+    <meta property="og:description" content="خدمات تطوير حلول مخصصة وتعديل اودو ليتناسب مع احتياجاتك الخاصة وعمليات عملك الفريدة" />
+    <link rel="canonical" href="https://todoops.com/services/customization-development" />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  </Fragment>
+
+  <Header lang="ar" />
+  
+  <main class="py-20 bg-white min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="mb-8" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2 rtl:space-x-reverse text-sm text-dark-600">
+          <li><a href="/" class="hover:text-odoo-purple transition-colors duration-200">الرئيسية</a></li>
+          <li><svg class="w-4 h-4 mx-2 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></li>
+          <li><a href="/services" class="hover:text-odoo-purple transition-colors duration-200">الخدمات</a></li>
+          <li><svg class="w-4 h-4 mx-2 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></li>
+          <li class="text-dark-900 font-medium">التخصيص والتطوير</li>
+        </ol>
+      </nav>
+
+      <!-- Hero Section -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl lg:text-5xl font-bold text-dark-900 mb-6">
+          تخصيص وتطوير اودو ERP
+        </h1>
+        <p class="text-xl text-odoo-purple font-medium mb-6">
+          حلول مخصصة تناسب احتياجات عملك الفريدة
+        </p>
+        <p class="text-lg text-dark-600 max-w-4xl mx-auto leading-relaxed">
+          نقدم خدمات تطوير حلول مخصصة وتعديل اودو ليتناسب مع احتياجاتك الخاصة وعمليات عملك الفريدة في السوق السعودي مع ضمان الجودة والاداء.
+        </p>
+      </div>
+
+      <!-- Customization Services -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-dark-900 text-center mb-12">
+          خدمات التخصيص والتطوير
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-odoo-accent/20 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">تطوير مخصص</h3>
+            <p class="text-dark-600">تطوير وحدات وميزات جديدة تناسب احتياجات شركتك الخاصة</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">تقارير مخصصة</h3>
+            <p class="text-dark-600">انشاء تقارير مخصصة تلبي احتياجاتك التحليلية والادارية</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">تكامل APIs</h3>
+            <p class="text-dark-600">ربط اودو مع الانظمة الخارجية والخدمات الاخرى</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">تخصيص الواجهات</h3>
+            <p class="text-dark-600">تصميم واجهات مستخدم مخصصة تناسب طبيعة عملك</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">تطوير الوحدات</h3>
+            <p class="text-dark-600">انشاء وحدات جديدة كلياً لتلبية احتياجات خاصة</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47.881-6.08 2.33l-.147.15C5.775 17.48 5.775 17.48 5.775 17.48L4.5 18.75c-.621.621-.621 1.621 0 2.242L6.742 23.234a1.5 1.5 0 002.122 0l2.242-2.242c.621-.621.621-1.621 0-2.242L9.864 17.508s0 0 0 0l.15-.147A7.962 7.962 0 0112 15c2.34 0 4.47.881 6.08 2.33l.147.15s0 0 0 0l1.242 1.242c.621.621 1.621.621 2.242 0l2.242-2.242a1.5 1.5 0 000-2.122L21.711 12.08A7.962 7.962 0 0119.5 6c0-2.34-.881-4.47-2.33-6.08l-.15-.147s0 0 0 0L15.778.531a1.5 1.5 0 00-2.122 0L11.414 2.773a1.5 1.5 0 000 2.122l1.242 1.242s0 0 0 0l.147.15A7.962 7.962 0 0115 9c0 2.34-.881 4.47-2.33 6.08l-.15.147s0 0 0 0l-1.242 1.242c-.621.621-1.621.621-2.242 0L7.794 15.227a1.5 1.5 0 00-2.122 0L3.43 17.469a1.5 1.5 0 000 2.122l2.242 2.242c.621.621 1.621.621 2.242 0l1.242-1.242s0 0 0 0l.15-.147A7.962 7.962 0 0112 21c2.34 0 4.47-.881 6.08-2.33l.147-.15s0 0 0 0l1.242-1.242c.621-.621.621-1.621 0-2.242L17.227 12.794a1.5 1.5 0 00-2.122 0L12.863 15.036s0 0 0 0l-.15.147A7.962 7.962 0 019 17.5c-2.34 0-4.47-.881-6.08-2.33l-.147-.15s0 0 0 0L1.531 13.778a1.5 1.5 0 00-2.122 0L-2.833 16.02a1.5 1.5 0 000 2.122l2.242 2.242c.621.621 1.621.621 2.242 0l1.242-1.242s0 0 0 0l.15-.147A7.962 7.962 0 006 21c0 2.34.881 4.47 2.33 6.08l.15.147s0 0 0 0l1.242 1.242c.621.621 1.621.621 2.242 0l2.242-2.242a1.5 1.5 0 000-2.122L9.964 21.863s0 0 0 0l-.147-.15A7.962 7.962 0 007.5 19c0-2.34.881-4.47 2.33-6.08l.15-.147s0 0 0 0l1.242-1.242c.621-.621.621-1.621 0-2.242L8.98 7.289a1.5 1.5 0 00-2.122 0L4.616 9.531a1.5 1.5 0 000 2.122l2.242 2.242c.621.621 1.621.621 2.242 0l1.242-1.242s0 0 0 0l.15-.147A7.962 7.962 0 0112 15z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">سير العمل المخصص</h3>
+            <p class="text-dark-600">تصميم سير عمل يتناسب مع عمليات شركتك الداخلية</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="bg-gradient-to-r from-odoo-purple to-purple-800 rounded-2xl p-8 text-white text-center">
+        <h2 class="text-3xl font-bold mb-4">
+          احصل على حلول اودو مخصصة لشركتك
+        </h2>
+        <p class="text-xl mb-6 text-purple-100">
+          تحدث مع خبرائنا لتطوير حلول مخصصة تناسب احتياجاتك الفريدة
+        </p>
+        <a 
+          href="/contact"
+          class="inline-flex items-center bg-white text-odoo-purple px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-200 shadow-lg"
+        >
+          ابدا مشروع التخصيص
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Footer lang="ar" />
+</Layout>

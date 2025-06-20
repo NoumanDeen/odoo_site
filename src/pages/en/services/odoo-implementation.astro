@@ -1,0 +1,341 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+
+// Generate JSON-LD structured data
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Full Odoo ERP Implementation in Saudi Arabia",
+  "description": "Comprehensive and customized Odoo ERP implementation services for Saudi businesses from certified Odoo partner",
+  "provider": {
+    "@type": "Organization",
+    "name": "ToDoOps",
+    "url": "https://your-domain.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "SA",
+      "addressRegion": "Riyadh"
+    }
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Saudi Arabia"
+  },
+  "offers": {
+    "@type": "Offer",
+    "description": "Complete and customized Odoo ERP implementation"
+  }
+};
+---
+
+<Layout 
+  title="Full Odoo ERP Implementation - ToDoOps | Certified Odoo Partner in Saudi Arabia"
+  lang="en" 
+  description="Comprehensive and customized Odoo ERP implementation services for Saudi businesses. Complete integration with seamless migration from legacy systems."
+>
+  <Fragment slot="head">
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="Odoo ERP implementation, certified Odoo partner, Odoo implementation Saudi Arabia, integrated ERP system, business system implementation" />
+    <meta property="og:title" content="Full Odoo ERP Implementation - ToDoOps" />
+    <meta property="og:description" content="Comprehensive and customized Odoo ERP implementation services for Saudi businesses from certified Odoo partner" />
+    <meta property="og:type" content="service" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://your-domain.com/en/services/odoo-implementation" />
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  </Fragment>
+
+  <Header lang="en" />
+  
+  <main class="py-20 bg-white min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="mb-8" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2 text-sm text-dark-600">
+          <li>
+            <a href="/en" class="hover:text-odoo-purple transition-colors duration-200">Home</a>
+          </li>
+          <li>
+            <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </li>
+          <li>
+            <a href="/en/services" class="hover:text-odoo-purple transition-colors duration-200">Services</a>
+          </li>
+          <li>
+            <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </li>
+          <li class="text-dark-900 font-medium">Full Odoo ERP Implementation</li>
+        </ol>
+      </nav>
+
+      <!-- Hero Section -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl lg:text-5xl font-bold text-dark-900 mb-6">
+          Full Odoo ERP Implementation in Saudi Arabia
+        </h1>
+        <p class="text-xl text-odoo-purple font-medium mb-6">
+          Complete and customized Odoo ERP solutions from certified partner
+        </p>
+        <p class="text-lg text-dark-600 max-w-4xl mx-auto leading-relaxed">
+          We provide comprehensive and customized Odoo ERP implementation services for Saudi businesses with seamless migration from legacy systems and maximum system utilization.
+        </p>
+      </div>
+
+      <!-- Service Overview -->
+      <div class="grid lg:grid-cols-2 gap-12 mb-16">
+        <div>
+          <h2 class="text-3xl font-bold text-dark-900 mb-6">
+            What is Full Odoo ERP Implementation?
+          </h2>
+          <p class="text-dark-600 mb-6 leading-relaxed">
+            Full Odoo ERP implementation is a comprehensive process that includes analyzing your business needs, customizing the system, data migration, training, and ongoing support. As a certified Odoo partner in Saudi Arabia, we ensure successful implementation that meets your unique requirements.
+          </p>
+          <ul class="space-y-3">
+            <li class="flex items-start space-x-3">
+              <div class="w-6 h-6 bg-odoo-accent/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700">Comprehensive business needs analysis</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <div class="w-6 h-6 bg-odoo-accent/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700">System customization according to your requirements</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <div class="w-6 h-6 bg-odoo-accent/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700">Safe data migration from legacy systems</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <div class="w-6 h-6 bg-odoo-accent/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700">Comprehensive team training</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-gradient-to-br from-gray-50 to-odoo-accent/10 rounded-xl p-8">
+          <h3 class="text-2xl font-bold text-dark-900 mb-6">
+            Why Choose ToDoOps?
+          </h3>
+          <div class="space-y-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 bg-odoo-purple rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700 font-medium">Certified Odoo partner in Saudi Arabia</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700 font-medium">Over 5 years of experience</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700 font-medium">24/7 ongoing support</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700 font-medium">Implementation success guarantee</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Implementation Process -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-dark-900 text-center mb-12">
+          Odoo ERP Implementation Phases
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="text-center">
+            <div class="w-16 h-16 bg-odoo-accent/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-odoo-purple">1</span>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">Analysis & Planning</h3>
+            <p class="text-dark-600">Comprehensive study of your company needs and appropriate implementation plan</p>
+          </div>
+          <div class="text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-green-600">2</span>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">Customization & Setup</h3>
+            <p class="text-dark-600">Customize Odoo ERP to fit your company operations and setup required modules</p>
+          </div>
+          <div class="text-center">
+            <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-blue-600">3</span>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">Data Migration</h3>
+            <p class="text-dark-600">Safe and accurate migration of all your data from legacy systems to Odoo</p>
+          </div>
+          <div class="text-center">
+            <div class="w-16 h-16 bg-orange-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-orange-600">4</span>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">Training & Go-Live</h3>
+            <p class="text-dark-600">Train your team and start operations with ongoing support</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features & Benefits -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-dark-900 text-center mb-12">
+          Benefits of Odoo ERP Implementation with Us
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-odoo-accent/20 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">Guaranteed Implementation</h3>
+            <p class="text-dark-600">We guarantee successful Odoo ERP implementation in your company with commitment to deadlines and budget</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">Fast Implementation</h3>
+            <p class="text-dark-600">Proven methodology ensures fast and efficient implementation with minimal downtime</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">Ongoing Support</h3>
+            <p class="text-dark-600">Continuous technical support and regular maintenance to ensure optimal system performance</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">Innovative Solutions</h3>
+            <p class="text-dark-600">We provide innovative and customized solutions that suit your business nature in the Saudi market</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">Comprehensive Training</h3>
+            <p class="text-dark-600">Comprehensive training programs to ensure your team gets maximum benefit from the system</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">Data Security</h3>
+            <p class="text-dark-600">Advanced protection for your data with backup and cybersecurity solutions</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-dark-900 text-center mb-12">
+          Frequently Asked Questions about Odoo ERP Implementation
+        </h2>
+        <div class="max-w-4xl mx-auto space-y-6">
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <h3 class="text-xl font-bold text-dark-900 mb-3">How long does Odoo ERP implementation take?</h3>
+            <p class="text-dark-600">Implementation time depends on your company size and complexity of requirements. Usually takes 4-12 weeks for small and medium businesses, and 3-6 months for large companies.</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <h3 class="text-xl font-bold text-dark-900 mb-3">Can Odoo be customized according to my needs?</h3>
+            <p class="text-dark-600">Yes, Odoo ERP is fully customizable. We customize the system to fit your company's unique operations and Saudi market requirements.</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <h3 class="text-xl font-bold text-dark-900 mb-3">What is the cost of Odoo ERP implementation?</h3>
+            <p class="text-dark-600">Cost varies based on number of users, required modules, and level of customization. We provide customized quotes after studying your needs.</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <h3 class="text-xl font-bold text-dark-900 mb-3">Do you provide post-implementation support?</h3>
+            <p class="text-dark-600">Yes, we provide 24/7 ongoing technical support, regular maintenance, system updates, and additional training as needed.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="bg-gradient-to-r from-odoo-purple to-purple-800 rounded-2xl p-8 text-white text-center">
+        <h2 class="text-3xl font-bold mb-4">
+          Ready to Transform Your Business with Odoo ERP?
+        </h2>
+        <p class="text-xl mb-6 text-purple-100">
+          Get a free consultation from our certified experts and discover how Odoo can improve your business operations
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a 
+            href="/en/contact"
+            class="inline-flex items-center bg-white text-odoo-purple px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-200 shadow-lg"
+          >
+            Book Free Consultation
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </a>
+          <a 
+            href="/en/faq"
+            class="inline-flex items-center border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-odoo-purple transition-all duration-200"
+          >
+            FAQ
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer lang="en" />
+</Layout>
+
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

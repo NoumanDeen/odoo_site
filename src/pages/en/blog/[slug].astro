@@ -1,0 +1,191 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import BlogPostContent from '../../../components/BlogPostContent.astro';
+import BlogRelatedPosts from '../../../components/BlogRelatedPosts.astro';
+import { fetchBlogPostBySlug, fetchRelatedPosts, fetchBlogData } from '../../../lib/blog';
+
+export async function getStaticPaths() {
+  const blogData = await fetchBlogData('en');
+  
+  return blogData.posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
+}
+
+const { slug } = Astro.params;
+const post = await fetchBlogPostBySlug(slug!, 'en');
+
+if (!post) {
+  return Astro.redirect('/en/blog');
+}
+
+// Fetch related posts
+const relatedPosts = post.category_id 
+  ? await fetchRelatedPosts(post.id, post.category_id, 'en', 3)
+  : [];
+
+// Build canonical URL
+const baseUrl = 'https://todoops.com';
+const canonicalUrl = `${baseUrl}/en/blog/${post.slug}`;
+
+// Generate JSON-LD structured data
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.title,
+  "description": post.meta_description,
+  "image": post.image_url,
+  "datePublished": post.published_at,
+  "dateModified": post.published_at,
+  "author": {
+    "@type": "Organization",
+    "name": post.author_name
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ToDoOps",
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${baseUrl}/favicon.svg`
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": canonicalUrl
+  }
+};
+
+// Add breadcrumb schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": `${baseUrl}/en`
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": `${baseUrl}/en/blog`
+    }
+  ]
+};
+
+// Add category to breadcrumb if available
+if (post.category) {
+  breadcrumbSchema.itemListElement.push({
+    "@type": "ListItem",
+    "position": 3,
+    "name": post.category.name,
+    "item": `${baseUrl}/en/blog/category/${post.category.slug}`
+  });
+}
+
+// Add current article to breadcrumb
+breadcrumbSchema.itemListElement.push({
+  "@type": "ListItem",
+  "position": breadcrumbSchema.itemListElement.length + 1,
+  "name": post.title,
+  "item": canonicalUrl
+});
+---
+
+<Layout 
+  title={`${post.title} - ToDoOps`}
+  lang="en" 
+  description={post.meta_description}
+  canonicalUrl={canonicalUrl}
+>
+  <Fragment slot="head">
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content={post.keywords} />
+    <meta property="og:title" content={post.title} />
+    <meta property="og:description" content={post.meta_description} />
+    <meta property="og:image" content={post.image_url} />
+    <meta property="og:type" content="article" />
+    <meta property="article:published_time" content={post.published_at} />
+    <meta property="article:author" content={post.author_name} />
+    {post.category && <meta property="article:section" content={post.category.name} />}
+    {post.tags && post.tags.map(tag => (
+      <meta property="article:tag" content={tag.name} />
+    ))}
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={post.title} />
+    <meta name="twitter:description" content={post.meta_description} />
+    <meta name="twitter:image" content={post.image_url} />
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    
+    <!-- Breadcrumb structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  </Fragment>
+
+  <Header lang="en" />
+  
+  <main class="py-20 bg-white min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="mb-8" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2 text-sm text-dark-600">
+          <li>
+            <a href="/en" class="hover:text-odoo-purple transition-colors duration-200">Home</a>
+          </li>
+          <li>
+            <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </li>
+          <li>
+            <a href="/en/blog" class="hover:text-odoo-purple transition-colors duration-200">Blog</a>
+          </li>
+          {post.category && (
+            <>
+              <li>
+                <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </li>
+              <li>
+                <a href={`/en/blog/category/${post.category.slug}`} class="hover:text-odoo-purple transition-colors duration-200">
+                  {post.category.name}
+                </a>
+              </li>
+            </>
+          )}
+          <li>
+            <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </li>
+          <li class="text-dark-900 font-medium truncate max-w-xs">
+            {post.title}
+          </li>
+        </ol>
+      </nav>
+
+      <!-- Blog Post Content -->
+      <BlogPostContent post={post} lang="en" />
+
+      <!-- Related Posts -->
+      <BlogRelatedPosts posts={relatedPosts} lang="en" />
+    </div>
+  </main>
+
+  <Footer lang="en" />
+</Layout>
+
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

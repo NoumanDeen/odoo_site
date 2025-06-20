@@ -1,0 +1,341 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+// Generate JSON-LD structured data
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "تنفيذ اودو ERP الكامل في السعودية",
+  "description": "خدمات تنفيذ اودو ERP الشاملة والمخصصة للشركات السعودية من شريك اودو المعتمد",
+  "provider": {
+    "@type": "Organization",
+    "name": "ToDoOps",
+    "url": "https://todoops.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "SA",
+      "addressRegion": "الرياض"
+    }
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Saudi Arabia"
+  },
+  "offers": {
+    "@type": "Offer",
+    "description": "تنفيذ شامل ومخصص لنظام اودو ERP"
+  }
+};
+---
+
+<Layout 
+  title="تنفيذ اودو ERP الكامل - ToDoOps | شريك اودو المعتمد في السعودية"
+  lang="ar" 
+  description="خدمات تنفيذ اودو ERP الشاملة والمخصصة للشركات السعودية. تنفيذ متكامل مع ضمان الانتقال السلس من الانظمة القديمة."
+>
+  <Fragment slot="head">
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="تنفيذ اودو ERP, شريك اودو المعتمد, تطبيق اودو السعودية, نظام ERP متكامل, تنفيذ انظمة الاعمال" />
+    <meta property="og:title" content="تنفيذ اودو ERP الكامل - ToDoOps" />
+    <meta property="og:description" content="خدمات تنفيذ اودو ERP الشاملة والمخصصة للشركات السعودية من شريك اودو المعتمد" />
+    <meta property="og:type" content="service" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://todoops.com/services/odoo-implementation" />
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  </Fragment>
+
+  <Header lang="ar" />
+  
+  <main class="py-20 bg-white min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="mb-8" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2 rtl:space-x-reverse text-sm text-dark-600">
+          <li>
+            <a href="/" class="hover:text-odoo-purple transition-colors duration-200">الرئيسية</a>
+          </li>
+          <li>
+            <svg class="w-4 h-4 mx-2 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </li>
+          <li>
+            <a href="/services" class="hover:text-odoo-purple transition-colors duration-200">الخدمات</a>
+          </li>
+          <li>
+            <svg class="w-4 h-4 mx-2 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </li>
+          <li class="text-dark-900 font-medium">تنفيذ اودو ERP الكامل</li>
+        </ol>
+      </nav>
+
+      <!-- Hero Section -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl lg:text-5xl font-bold text-dark-900 mb-6">
+          تنفيذ اودو ERP الكامل في السعودية
+        </h1>
+        <p class="text-xl text-odoo-purple font-medium mb-6">
+          حلول اودو ERP متكاملة ومخصصة من شريك معتمد
+        </p>
+        <p class="text-lg text-dark-600 max-w-4xl mx-auto leading-relaxed">
+          نقدم خدمات تنفيذ اودو ERP الشاملة والمخصصة للشركات السعودية مع ضمان الانتقال السلس من الانظمة القديمة وتحقيق اقصى استفادة من النظام.
+        </p>
+      </div>
+
+      <!-- Service Overview -->
+      <div class="grid lg:grid-cols-2 gap-12 mb-16">
+        <div>
+          <h2 class="text-3xl font-bold text-dark-900 mb-6">
+            ما هو تنفيذ اودو ERP الكامل؟
+          </h2>
+          <p class="text-dark-600 mb-6 leading-relaxed">
+            تنفيذ اودو ERP الكامل هو عملية شاملة تتضمن تحليل احتياجات شركتك، تخصيص النظام، نقل البيانات، التدريب، والدعم المستمر. نحن كشريك اودو معتمد في السعودية نضمن تطبيق ناجح يلبي احتياجاتك الفريدة.
+          </p>
+          <ul class="space-y-3">
+            <li class="flex items-start space-x-3 rtl:space-x-reverse">
+              <div class="w-6 h-6 bg-odoo-accent/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700">تحليل شامل لاحتياجات العمل</span>
+            </li>
+            <li class="flex items-start space-x-3 rtl:space-x-reverse">
+              <div class="w-6 h-6 bg-odoo-accent/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700">تخصيص النظام حسب متطلباتك</span>
+            </li>
+            <li class="flex items-start space-x-3 rtl:space-x-reverse">
+              <div class="w-6 h-6 bg-odoo-accent/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700">نقل امن للبيانات من الانظمة القديمة</span>
+            </li>
+            <li class="flex items-start space-x-3 rtl:space-x-reverse">
+              <div class="w-6 h-6 bg-odoo-accent/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700">تدريب شامل للفريق</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-gradient-to-br from-gray-50 to-odoo-accent/10 rounded-xl p-8">
+          <h3 class="text-2xl font-bold text-dark-900 mb-6">
+            لماذا تختار ToDoOps؟
+          </h3>
+          <div class="space-y-4">
+            <div class="flex items-center space-x-3 rtl:space-x-reverse">
+              <div class="w-8 h-8 bg-odoo-purple rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700 font-medium">شريك اودو معتمد في السعودية</span>
+            </div>
+            <div class="flex items-center space-x-3 rtl:space-x-reverse">
+              <div class="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700 font-medium">خبرة اكثر من 5 سنوات</span>
+            </div>
+            <div class="flex items-center space-x-3 rtl:space-x-reverse">
+              <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700 font-medium">دعم مستمر 24/7</span>
+            </div>
+            <div class="flex items-center space-x-3 rtl:space-x-reverse">
+              <div class="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <span class="text-dark-700 font-medium">ضمان نجاح التطبيق</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Implementation Process -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-dark-900 text-center mb-12">
+          مراحل تنفيذ اودو ERP
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="text-center">
+            <div class="w-16 h-16 bg-odoo-accent/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-odoo-purple">1</span>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">التحليل والتخطيط</h3>
+            <p class="text-dark-600">دراسة شاملة لاحتياجات شركتك ووضع خطة التنفيذ المناسبة</p>
+          </div>
+          <div class="text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-green-600">2</span>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">التخصيص والاعداد</h3>
+            <p class="text-dark-600">تخصيص اودو ERP ليناسب عمليات شركتك واعداد الوحدات المطلوبة</p>
+          </div>
+          <div class="text-center">
+            <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-blue-600">3</span>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">نقل البيانات</h3>
+            <p class="text-dark-600">نقل امن ودقيق لجميع بياناتك من الانظمة القديمة الى اودو</p>
+          </div>
+          <div class="text-center">
+            <div class="w-16 h-16 bg-orange-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-orange-600">4</span>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">التدريب والتشغيل</h3>
+            <p class="text-dark-600">تدريب فريقك وبدء التشغيل مع الدعم المستمر</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features & Benefits -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-dark-900 text-center mb-12">
+          مميزات تنفيذ اودو ERP معنا
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-odoo-accent/20 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">تنفيذ مضمون</h3>
+            <p class="text-dark-600">نضمن نجاح تطبيق اودو ERP في شركتك مع التزامنا بالمواعيد والميزانية</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">تطبيق سريع</h3>
+            <p class="text-dark-600">منهجية مجربة تضمن تطبيق سريع وفعال مع تقليل وقت التوقف</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">دعم مستمر</h3>
+            <p class="text-dark-600">دعم تقني مستمر وصيانة دورية لضمان عمل النظام بافضل كفاءة</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">حلول مبتكرة</h3>
+            <p class="text-dark-600">نقدم حلول مبتكرة ومخصصة تناسب طبيعة عملك في السوق السعودي</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">تدريب شامل</h3>
+            <p class="text-dark-600">برامج تدريبية شاملة لضمان استفادة فريقك القصوى من النظام</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">امان البيانات</h3>
+            <p class="text-dark-600">حماية متقدمة لبياناتك مع النسخ الاحتياطي والامان السيبراني</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-dark-900 text-center mb-12">
+          الاسئلة الشائعة حول تنفيذ اودو ERP
+        </h2>
+        <div class="max-w-4xl mx-auto space-y-6">
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <h3 class="text-xl font-bold text-dark-900 mb-3">كم يستغرق تنفيذ اودو ERP؟</h3>
+            <p class="text-dark-600">يعتمد وقت التنفيذ على حجم شركتك وتعقيد متطلباتك. عادة ما يستغرق من 4-12 اسبوع للشركات الصغيرة والمتوسطة، و3-6 اشهر للشركات الكبيرة.</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <h3 class="text-xl font-bold text-dark-900 mb-3">هل يمكن تخصيص اودو حسب احتياجاتي؟</h3>
+            <p class="text-dark-600">نعم، اودو ERP قابل للتخصيص بالكامل. نقوم بتخصيص النظام ليناسب عمليات شركتك الفريدة ومتطلبات السوق السعودي.</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <h3 class="text-xl font-bold text-dark-900 mb-3">ما هي تكلفة تنفيذ اودو ERP؟</h3>
+            <p class="text-dark-600">تختلف التكلفة حسب عدد المستخدمين والوحدات المطلوبة ومستوى التخصيص. نقدم عروض اسعار مخصصة بعد دراسة احتياجاتك.</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+            <h3 class="text-xl font-bold text-dark-900 mb-3">هل تقدمون دعم ما بعد التنفيذ؟</h3>
+            <p class="text-dark-600">نعم، نقدم دعم تقني مستمر 24/7، صيانة دورية، تحديثات النظام، وتدريب اضافي حسب الحاجة.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="bg-gradient-to-r from-odoo-purple to-purple-800 rounded-2xl p-8 text-white text-center">
+        <h2 class="text-3xl font-bold mb-4">
+          هل انت مستعد لتحويل عملك مع اودو ERP؟
+        </h2>
+        <p class="text-xl mb-6 text-purple-100">
+          احصل على استشارة مجانية من خبرائنا المعتمدين واكتشف كيف يمكن لاودو ان يحسن عمليات شركتك
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a 
+            href="/contact"
+            class="inline-flex items-center bg-white text-odoo-purple px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-200 shadow-lg"
+          >
+            احجز استشارة مجانية
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </a>
+          <a 
+            href="/faq"
+            class="inline-flex items-center border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-odoo-purple transition-all duration-200"
+          >
+            الاسئلة الشائعة
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer lang="ar" />
+</Layout>
+
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

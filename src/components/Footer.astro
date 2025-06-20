@@ -1,0 +1,167 @@
+---
+import ToDoOpsLogo from './ToDoOpsLogo.astro';
+
+export interface Props {
+  lang: 'ar' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const content = {
+  ar: {
+    company: 'ToDoOps',
+    tagline: 'خدمات تنفيذ انظمة ERP المتخصصة في المملكة العربية السعودية',
+    description: 'نحن نساعد الشركات على النمو من خلال حلول اودو ERP المتخصصة والدعم المستمر.',
+    quickLinks: 'روابط سريعة',
+    services: 'خدماتنا',
+    odooApps: 'تطبيقات اودو',
+    contact: 'تواصل معنا',
+    rights: 'جميع الحقوق محفوظة',
+    links: {
+      home: 'الرئيسية',
+      about: 'عن الشركة',
+      services: 'الخدمات',
+      industries: 'الصناعات',
+      odooApps: 'تطبيقات اودو',
+      blog: 'المدونة',
+      contact: 'تواصل معنا',
+      faq: 'الاسئلة الشائعة'
+    },
+    servicesList: [
+      { name: 'تنفيذ اودو ERP الكامل', href: '/services/odoo-implementation' },
+      { name: 'تحليل الاعمال', href: '/services/business-analysis' },
+      { name: 'تكوين الوحدات', href: '/services/module-configuration' },
+      { name: 'التخصيص والتطوير', href: '/services/customization-development' }
+    ]
+  },
+  en: {
+    company: 'ToDoOps',
+    tagline: 'Professional ERP Implementation Services in Saudi Arabia',
+    description: 'We help businesses grow through specialized Odoo ERP solutions and ongoing support.',
+    quickLinks: 'Quick Links',
+    services: 'Our Services',
+    odooApps: 'Odoo Apps',
+    contact: 'Contact Us',
+    rights: 'All rights reserved',
+    links: {
+      home: 'Home',
+      about: 'About',
+      services: 'Services',
+      industries: 'Industries',
+      odooApps: 'Odoo Apps',
+      blog: 'Blog',
+      contact: 'Contact',
+      faq: 'FAQ'
+    },
+    servicesList: [
+      { name: 'Odoo ERP Implementation', href: '/en/services/odoo-implementation' },
+      { name: 'Business Analysis', href: '/en/services/business-analysis' },
+      { name: 'Module Configuration', href: '/en/services/module-configuration' },
+      { name: 'Customization & Development', href: '/en/services/customization-development' }
+    ]
+  }
+};
+
+const t = content[lang];
+---
+
+<footer class="bg-dark-900 text-white py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Company Info -->
+      <div class="lg:col-span-2">
+        <div class="flex items-center space-x-3 rtl:space-x-reverse mb-6">
+          <ToDoOpsLogo size={48} variant="white" />
+          <div>
+            <h3 class="text-2xl font-bold flex items-center">
+              <span class="text-purple-300" dir="ltr">ToDoOps</span>
+            </h3>
+            <p class="text-purple-300">{t.tagline}</p>
+          </div>
+        </div>
+        <p class="text-gray-300 leading-relaxed mb-6 max-w-md">
+          {t.description}
+        </p>
+        <div class="mb-4">
+          <a href="tel:+966540676575" class="text-gray-300 hover:text-purple-300 transition-colors duration-200 flex items-center">
+            <svg class="w-5 h-5 mr-2 rtl:mr-0 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+            </svg>
+            {lang === 'ar' 
+              ? <span dir="ltr">+966 54 067 6575</span>
+              : '+966 54 067 6575'
+            }
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-lg font-semibold mb-6">{t.quickLinks}</h4>
+        <ul class="space-y-3">
+          <li>
+            <a href={lang === 'ar' ? '/' : '/en'} class="text-gray-300 hover:text-purple-300 transition-colors duration-200">
+              {t.links.home}
+            </a>
+          </li>
+          <li>
+            <a href={lang === 'ar' ? '/about-us' : '/en/about-us'} class="text-gray-300 hover:text-purple-300 transition-colors duration-200">
+              {t.links.about}
+            </a>
+          </li>
+          <li>
+            <a href={lang === 'ar' ? '/services' : '/en/services'} class="text-gray-300 hover:text-purple-300 transition-colors duration-200">
+              {t.links.services}
+            </a>
+          </li>
+          <li>
+            <a href={lang === 'ar' ? '/industries' : '/en/industries'} class="text-gray-300 hover:text-purple-300 transition-colors duration-200">
+              {t.links.industries}
+            </a>
+          </li>
+          <li>
+            <a href={lang === 'ar' ? '/odoo-apps' : '/en/odoo-apps'} class="text-gray-300 hover:text-purple-300 transition-colors duration-200">
+              {t.links.odooApps}
+            </a>
+          </li>
+          <li>
+            <a href={lang === 'ar' ? '/blog' : '/en/blog'} class="text-gray-300 hover:text-purple-300 transition-colors duration-200">
+              {t.links.blog}
+            </a>
+          </li>
+          <li>
+            <a href={lang === 'ar' ? '/contact' : '/en/contact'} class="text-gray-300 hover:text-purple-300 transition-colors duration-200">
+              {t.links.contact}
+            </a>
+          </li>
+          <li>
+            <a href={lang === 'ar' ? '/faq' : '/en/faq'} class="text-gray-300 hover:text-purple-300 transition-colors duration-200">
+              {t.links.faq}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <h4 class="text-lg font-semibold mb-6">{t.services}</h4>
+        <ul class="space-y-3">
+          {t.servicesList.map((service) => (
+            <li>
+              <a href={service.href} class="text-gray-300 hover:text-purple-300 transition-colors duration-200">
+                {service.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-dark-800 mt-12 pt-8 text-center">
+      <p class="text-gray-400">
+        © {new Date().getFullYear()} {t.company}. {t.rights}.
+      </p>
+    </div>
+  </div>
+</footer>

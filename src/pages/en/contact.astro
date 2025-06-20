@@ -1,0 +1,78 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Contact from '../../components/Contact.astro';
+import Footer from '../../components/Footer.astro';
+
+// SEO metadata
+const title = "Contact Us - ToDoOps | Certified Odoo Partner in Saudi Arabia";
+const description = "Contact ToDoOps team, a certified Odoo partner in Saudi Arabia. Get a free consultation about Odoo ERP implementation for your company.";
+
+// Structured data for SEO
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contact Us - ToDoOps",
+  "description": "Contact page for ToDoOps, a certified Odoo partner in Saudi Arabia",
+  "url": "https://your-domain.com/en/contact",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "ToDoOps",
+    "telephone": "+966540676575",
+    "email": "contact@todoops.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "SA",
+      "addressRegion": "Eastern Province, Riyadh, Jeddah"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+966540676575",
+      "contactType": "customer service",
+      "availableLanguage": ["Arabic", "English"]
+    }
+  }
+};
+---
+
+<Layout title={title} lang="en" description={description}>
+  <Fragment slot="head">
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="contact us, odoo partner, odoo implementation, odoo support, ERP consultation, odoo Saudi Arabia" />
+    <meta property="og:title" content="Contact Us - ToDoOps" />
+    <meta property="og:description" content="Contact ToDoOps team, a certified Odoo partner in Saudi Arabia. Get a free consultation about Odoo ERP implementation for your company." />
+    <meta property="og:type" content="website" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://your-domain.com/en/contact" />
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  </Fragment>
+
+  <Header lang="en" />
+  
+  <main class="py-20 bg-gray-50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="mb-8" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2 text-sm text-dark-600">
+          <li>
+            <a href="/en" class="hover:text-odoo-purple transition-colors duration-200">Home</a>
+          </li>
+          <li>
+            <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </li>
+          <li class="text-dark-900 font-medium">Contact Us</li>
+        </ol>
+      </nav>
+
+      <!-- Reuse the Contact component -->
+      <Contact lang="en" />
+    </div>
+  </main>
+
+  <Footer lang="en" />
+</Layout>

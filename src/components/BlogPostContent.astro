@@ -1,0 +1,173 @@
+---
+export interface Props {
+  post: {
+    id: string;
+    title: string;
+    content: string;
+    meta_description: string;
+    keywords: string;
+    published_at: string;
+    image_url: string;
+    author_name: string;
+    category?: {
+      name: string;
+      slug: string;
+    };
+    tags?: Array<{
+      name: string;
+      slug: string;
+    }>;
+  };
+  lang: 'ar' | 'en';
+}
+
+const { post, lang } = Astro.props;
+
+// Format date
+const formatDate = (dateString: string, lang: 'ar' | 'en') => {
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  };
+  
+  if (lang === 'ar') {
+    return date.toLocaleDateString('ar-SA', options);
+  } else {
+    return date.toLocaleDateString('en-US', options);
+  }
+};
+
+const content = {
+  ar: {
+    publishedOn: 'نشر في',
+    by: 'بواسطة',
+    category: 'التصنيف',
+    tags: 'الكلمات المفتاحية',
+    cta: {
+      title: 'هل تفكر في تطبيق اودو لشركتك؟',
+      description: 'احصل على استشارة مجانية ومخصصة لاحتياجات شركتك من خبرائنا المعتمدين.',
+      button: 'احجز استشارة مجانية الان'
+    }
+  },
+  en: {
+    publishedOn: 'Published on',
+    by: 'by',
+    category: 'Category',
+    tags: 'Tags',
+    cta: {
+      title: 'Considering Odoo for Your Business?',
+      description: 'Get a free, personalized consultation for your business needs from our certified experts.',
+      button: 'Book Free Consultation Now'
+    }
+  }
+};
+
+const t = content[lang];
+
+// Optimize image URL if possible
+const optimizeImageUrl = (url: string) => {
+  // For Pexels images, we can use their API to get optimized versions
+  if (url.includes('pexels.com')) {
+    // Check if the URL already has parameters
+    const hasParams = url.includes('?');
+    // Add auto compression and size parameters
+    return `${url}${hasParams ? '&' : '?'}auto=compress&cs=tinysrgb&w=1200`;
+  }
+  return url;
+};
+
+const optimizedImageUrl = optimizeImageUrl(post.image_url);
+---
+
+<article class="max-w-4xl mx-auto">
+  <!-- Header -->
+  <header class="mb-8">
+    <!-- Category badge -->
+    {post.category && (
+      <div class="mb-4">
+        <span class="bg-odoo-purple text-white px-4 py-2 rounded-full text-sm font-medium">
+          {post.category.name}
+        </span>
+      </div>
+    )}
+
+    <!-- Title -->
+    <h1 class="text-4xl lg:text-5xl font-bold text-dark-900 mb-6 leading-tight">
+      {post.title}
+    </h1>
+
+    <!-- Meta information -->
+    <div class="flex flex-wrap items-center gap-4 text-dark-600 mb-6">
+      <span class="flex items-center">
+        <svg class="w-5 h-5 mr-2 rtl:mr-0 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+        {t.publishedOn} {formatDate(post.published_at, lang)}
+      </span>
+      <span class="flex items-center">
+        <svg class="w-5 h-5 mr-2 rtl:mr-0 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+        </svg>
+        {t.by} {post.author_name}
+      </span>
+    </div>
+
+    <!-- Featured image -->
+    <div class="mb-8">
+      <img 
+        src={optimizedImageUrl} 
+        alt={post.title}
+        class="w-full h-64 lg:h-96 object-cover rounded-xl shadow-lg"
+        width="1200"
+        height="600"
+      />
+    </div>
+  </header>
+
+  <!-- Content -->
+  <div class="prose prose-lg max-w-none mb-12">
+    <div class="blog-content" set:html={post.content}></div>
+  </div>
+
+  <!-- Tags -->
+  {post.tags && post.tags.length > 0 && (
+    <div class="mb-8">
+      <h3 class="text-lg font-semibold text-dark-900 mb-4">{t.tags}:</h3>
+      <div class="flex flex-wrap gap-2">
+        {post.tags.map((tag) => (
+          <a 
+            href={`${lang === 'ar' ? '/blog' : '/en/blog'}?tags=${tag.slug}`}
+            class="bg-gray-100 text-dark-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-odoo-accent/20 transition-colors duration-200"
+          >
+            {tag.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <!-- Call to Action -->
+  <div class="bg-gradient-to-r from-odoo-purple to-purple-800 rounded-2xl p-8 text-white text-center">
+    <h3 class="text-2xl font-bold mb-4">
+      {t.cta.title}
+    </h3>
+    <p class="text-xl mb-6 text-purple-100">
+      {t.cta.description}
+    </p>
+    <a 
+      href={`${lang === 'ar' ? '/contact' : '/en/contact'}`}
+      class="inline-flex items-center bg-white text-odoo-purple px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-200 shadow-lg"
+    >
+      {t.cta.button}
+      <svg class={`w-5 h-5 ml-2 rtl:ml-0 rtl:mr-2 ${lang === 'ar' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+      </svg>
+    </a>
+  </div>
+</article>
+
+<style>
+  /* These styles are now handled by the @tailwindcss/typography plugin */
+</style>

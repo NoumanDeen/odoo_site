@@ -1,0 +1,194 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { odooAppCategories, getOdooAppIcon } from '../../../data/odooApps';
+
+// Generate JSON-LD structured data
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Odoo Applications",
+  "description": "Comprehensive suite of Odoo applications for managing all aspects of business",
+  "itemListElement": odooAppCategories.map((category, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "item": {
+      "@type": "SoftwareApplication",
+      "name": category.en.name,
+      "description": category.en.shortDescription,
+      "url": `https://your-domain.com/en/odoo-apps/${category.slug}`
+    }
+  }))
+};
+---
+
+<Layout 
+  title="Odoo Apps | Integrated Business Management Solutions - ToDoOps"
+  lang="en" 
+  description="Discover a comprehensive suite of Odoo applications for managing all aspects of business. Integrated solutions for sales, finance, inventory, human resources, marketing, and more."
+>
+  <Fragment slot="head">
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="Odoo apps, Odoo ERP, business management solutions, business software, Odoo Saudi Arabia, business applications" />
+    <meta property="og:title" content="Odoo Apps | Integrated Business Management Solutions - ToDoOps" />
+    <meta property="og:description" content="Discover a comprehensive suite of Odoo applications for managing all aspects of business. Integrated solutions for sales, finance, inventory, human resources, marketing, and more." />
+    <meta property="og:type" content="website" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://your-domain.com/en/odoo-apps" />
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  </Fragment>
+
+  <Header lang="en" />
+  
+  <main class="py-20 bg-white min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="mb-8" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2 text-sm text-dark-600">
+          <li>
+            <a href="/en" class="hover:text-odoo-purple transition-colors duration-200">Home</a>
+          </li>
+          <li>
+            <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </li>
+          <li class="text-dark-900 font-medium">Odoo Apps</li>
+        </ol>
+      </nav>
+
+      <!-- Hero Section -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl lg:text-5xl font-bold text-dark-900 mb-6">
+          Odoo Applications
+        </h1>
+        <p class="text-xl text-odoo-purple font-medium mb-6">
+          Integrated Solutions for Managing All Aspects of Business
+        </p>
+        <p class="text-lg text-dark-600 max-w-4xl mx-auto leading-relaxed">
+          Odoo provides a comprehensive suite of integrated applications for managing all aspects of business, from sales and finance to inventory and human resources. 
+          These applications work together seamlessly to provide a complete solution that helps companies streamline operations, increase efficiency, and achieve growth.
+        </p>
+      </div>
+
+      <!-- App Categories Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        {odooAppCategories.map((category) => (
+          <div class="bg-white rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group">
+            <div class="w-16 h-16 bg-odoo-purple/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-200">
+              <svg class="w-8 h-8 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <Fragment set:html={getOdooAppIcon(category.icon)} />
+              </svg>
+            </div>
+            
+            <h2 class="text-2xl font-bold text-dark-900 mb-4">
+              <a href={`/en/odoo-apps/${category.slug}`} class="hover:text-odoo-purple transition-colors duration-200">
+                {category.en.name}
+              </a>
+            </h2>
+            
+            <p class="text-dark-600 mb-6 leading-relaxed">
+              {category.en.shortDescription}
+            </p>
+
+            <a 
+              href={`/en/odoo-apps/${category.slug}`}
+              class="inline-flex items-center text-odoo-purple hover:text-purple-800 font-medium transition-colors duration-200"
+            >
+              Explore Applications
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </a>
+          </div>
+        ))}
+      </div>
+
+      <!-- Why Odoo Apps Section -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-dark-900 text-center mb-12">
+          Why Odoo Applications?
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="text-center bg-gradient-to-br from-gray-50 to-odoo-accent/10 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
+            <div class="w-16 h-16 mx-auto mb-6 bg-odoo-accent/20 rounded-xl flex items-center justify-center">
+              <svg class="w-8 h-8 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-4">
+              Comprehensive Integration
+            </h3>
+            <p class="text-dark-600 leading-relaxed">
+              All Odoo applications work together seamlessly, ensuring information flow between departments and avoiding duplicate data entry.
+            </p>
+          </div>
+          <div class="text-center bg-gradient-to-br from-gray-50 to-odoo-accent/10 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
+            <div class="w-16 h-16 mx-auto mb-6 bg-green-100 rounded-xl flex items-center justify-center">
+              <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-4">
+              Ease of Use
+            </h3>
+            <p class="text-dark-600 leading-relaxed">
+              Intuitive and user-friendly interfaces reduce training time and accelerate system adoption.
+            </p>
+          </div>
+          <div class="text-center bg-gradient-to-br from-gray-50 to-odoo-accent/10 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
+            <div class="w-16 h-16 mx-auto mb-6 bg-blue-100 rounded-xl flex items-center justify-center">
+              <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-4">
+              Customizability
+            </h3>
+            <p class="text-dark-600 leading-relaxed">
+              Ability to customize all applications to suit your company's unique needs and local market requirements.
+            </p>
+          </div>
+          <div class="text-center bg-gradient-to-br from-gray-50 to-odoo-accent/10 rounded-xl p-6 hover:shadow-lg transition-all duration-200">
+            <div class="w-16 h-16 mx-auto mb-6 bg-orange-100 rounded-xl flex items-center justify-center">
+              <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-4">
+              Reports and Analytics
+            </h3>
+            <p class="text-dark-600 leading-relaxed">
+              Advanced reports and analytics provide valuable insights for better decision-making and performance improvement.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="bg-gradient-to-r from-odoo-purple to-purple-800 rounded-2xl p-8 text-white text-center">
+        <h2 class="text-3xl font-bold mb-4">
+          Ready to Transform Your Business with Odoo?
+        </h2>
+        <p class="text-xl mb-6 text-purple-100">
+          Talk to our experts to learn how Odoo applications can help your company grow and evolve
+        </p>
+        <a 
+          href="/en/contact"
+          class="inline-flex items-center bg-white text-odoo-purple px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-200 shadow-lg"
+        >
+          Book Free Consultation
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Footer lang="en" />
+</Layout>

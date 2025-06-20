@@ -1,0 +1,40 @@
+# Netlify headers for performance optimization
+
+/*
+  # Security headers
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+
+# Cache static assets for 1 month
+/assets/*
+  Cache-Control: public, max-age=2592000, immutable
+
+# Cache images for 1 month
+/*.jpg
+  Cache-Control: public, max-age=2592000
+/*.jpeg
+  Cache-Control: public, max-age=2592000
+/*.png
+  Cache-Control: public, max-age=2592000
+/*.webp
+  Cache-Control: public, max-age=2592000
+/*.svg
+  Cache-Control: public, max-age=2592000
+
+# Cache fonts for 1 month
+/*.woff
+  Cache-Control: public, max-age=2592000
+/*.woff2
+  Cache-Control: public, max-age=2592000
+
+# Cache CSS and JS for 1 month
+/*.css
+  Cache-Control: public, max-age=2592000
+/*.js
+  Cache-Control: public, max-age=2592000
+
+# Cache HTML for 1 hour
+/*.html
+  Cache-Control: public, max-age=3600

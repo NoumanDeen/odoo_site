@@ -1,0 +1,220 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Header from '../../../../components/Header.astro';
+import Footer from '../../../../components/Footer.astro';
+import BlogPostForm from '../../../../components/BlogPostForm.astro';
+import { supabase } from '../../../../lib/supabase';
+
+export async function getStaticPaths() {
+  const { data: posts } = await supabase
+    .from('blog_posts')
+    .select('slug');
+    
+  return posts ? posts.map(post => ({
+    params: { slug: post.slug }
+  })) : [];
+}
+
+const { slug } = Astro.params;
+
+// Fetch existing slugs to ensure uniqueness
+const { data: allPosts } = await supabase
+  .from('blog_posts')
+  .select('slug');
+
+const existingSlugs = allPosts 
+  ? allPosts.filter(post => post.slug !== slug).map(post => post.slug) 
+  : [];
+
+// Fetch post data
+const { data: postData } = await supabase
+  .from('blog_posts')
+  .select(`
+    id,
+    slug,
+    category_id,
+    image_url,
+    blog_post_translations!inner(title, content, meta_description, keywords)
+  `)
+  .eq('slug', slug)
+  .eq('blog_post_translations.lang', 'ar')
+  .single();
+
+// Fetch post tags
+const { data: postTags } = await supabase
+  .from('blog_post_tags')
+  .select('tag_id')
+  .eq('post_id', postData?.id);
+
+const selectedTagIds = postTags ? postTags.map(tag => tag.tag_id) : [];
+
+// Fetch categories for the form
+const { data: categoriesData } = await supabase
+  .from('blog_categories')
+  .select(`
+    id,
+    slug,
+    blog_category_translations!inner(name)
+  `)
+  .eq('blog_category_translations.lang', 'ar');
+
+const categories = categoriesData ? categoriesData.map(cat => ({
+  id: cat.id,
+  slug: cat.slug,
+  name: cat.blog_category_translations[0]?.name || cat.slug
+})) : [];
+
+// Fetch tags for the form
+const { data: tagsData } = await supabase
+  .from('blog_tags')
+  .select(`
+    id,
+    slug,
+    blog_tag_translations!inner(name)
+  `)
+  .eq('blog_tag_translations.lang', 'ar');
+
+const tags = tagsData ? tagsData.map(tag => ({
+  id: tag.id,
+  slug: tag.slug,
+  name: tag.blog_tag_translations[0]?.name || tag.slug
+})) : [];
+
+// Prepare post data for the form
+const formData = postData ? {
+  id: postData.id,
+  title: postData.blog_post_translations[0]?.title || '',
+  slug: postData.slug,
+  content: postData.blog_post_translations[0]?.content || '',
+  meta_description: postData.blog_post_translations[0]?.meta_description || '',
+  keywords: postData.blog_post_translations[0]?.keywords || '',
+  category_id: postData.category_id,
+  image_url: postData.image_url
+} : {};
+---
+
+<Layout 
+  title={`تعديل المقال: ${formData.title} - لوحة التحكم`}
+  lang="ar"
+>
+  <Header lang="ar" />
+  
+  <main class="py-20 bg-gray-50 min-h-screen">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-xl p-8 shadow-lg">
+        <h1 class="text-3xl font-bold text-dark-900 mb-8 text-center">تعديل المقال</h1>
+        
+        <BlogPostForm 
+          lang="ar"
+          existingSlugs={existingSlugs}
+          editMode={true}
+          postData={formData}
+          categories={categories}
+          tags={tags}
+        />
+      </div>
+    </div>
+  </main>
+
+  <Footer lang="ar" />
+</Layout>
+
+<script define:vars={{ selectedTagIds }}>
+  import { createClient } from '@supabase/supabase-js';
+  
+  // Initialize Supabase client
+  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('blog-post-form');
+    const tagsSelect = document.getElementById('post-tags');
+    
+    // Set selected tags
+    if (tagsSelect && selectedTagIds.length > 0) {
+      for (const option of tagsSelect.options) {
+        if (selectedTagIds.includes(option.value)) {
+          option.selected = true;
+        }
+      }
+    }
+    
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(form);
+        const post_id = formData.get('post-id');
+        const title = formData.get('title');
+        const slug = formData.get('slug');
+        const category_id = formData.get('category_id');
+        const image_url = formData.get('image_url');
+        const meta_description = formData.get('meta_description');
+        const keywords = formData.get('keywords');
+        const content = formData.get('content');
+        
+        // Get selected tags
+        const selectedTags = Array.from(tagsSelect.selectedOptions).map(option => option.value);
+        
+        try {
+          // Update post
+          const { error: postError } = await supabase
+            .from('blog_posts')
+            .update({ 
+              slug,
+              category_id,
+              image_url
+            })
+            .eq('id', post_id);
+            
+          if (postError) throw postError;
+          
+          // Update translation
+          const { error: translationError } = await supabase
+            .from('blog_post_translations')
+            .update({
+              title,
+              content,
+              meta_description,
+              keywords
+            })
+            .eq('post_id', post_id)
+            .eq('lang', 'ar');
+            
+          if (translationError) throw translationError;
+          
+          // Update tags - first delete existing
+          const { error: deleteTagsError } = await supabase
+            .from('blog_post_tags')
+            .delete()
+            .eq('post_id', post_id);
+            
+          if (deleteTagsError) throw deleteTagsError;
+          
+          // Then insert new tags if any were selected
+          if (selectedTags.length > 0) {
+            const tagInserts = selectedTags.map(tag_id => ({
+              post_id,
+              tag_id
+            }));
+            
+            const { error: tagError } = await supabase
+              .from('blog_post_tags')
+              .insert(tagInserts);
+              
+            if (tagError) throw tagError;
+          }
+          
+          // Redirect to the blog post
+          window.location.href = `/blog/${slug}`;
+          
+        } catch (error) {
+          console.error('Error updating post:', error);
+          alert('حدث خطا اثناء تحديث المقال. يرجى المحاولة مرة اخرى.');
+        }
+      });
+    }
+  });
+</script>

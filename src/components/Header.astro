@@ -1,0 +1,447 @@
+---
+import ToDoOpsLogo from './ToDoOpsLogo.astro';
+import ServicesDropdown from './ServicesDropdown.astro';
+import IndustriesDropdown from './IndustriesDropdown.astro';
+import OdooAppsDropdown from './OdooAppsDropdown.astro';
+
+export interface Props {
+  lang: 'ar' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const content = {
+  ar: {
+    company: 'ToDoOps',
+    tagline: 'خدمات ERP متخصصة',
+    nav: {
+      home: 'الرئيسية',
+      about: 'عن الشركة',
+      services: 'الخدمات',
+      industries: 'الصناعات',
+      odooApps: 'تطبيقات اودو',
+      blog: 'المدونة',
+      contact: 'تواصل معنا'
+    },
+    cta: 'احجز استشارة مجانية',
+    services: {
+      title: 'خدماتنا',
+      items: [
+        { name: 'تنفيذ اودو ERP الكامل', href: '/services/odoo-implementation' },
+        { name: 'تحليل الاعمال وجمع المتطلبات', href: '/services/business-analysis' },
+        { name: 'تنفيذ اودو وتكوين الوحدات', href: '/services/module-configuration' },
+        { name: 'التخصيص والتطوير', href: '/services/customization-development' },
+        { name: 'نقل البيانات', href: '/services/data-migration' },
+        { name: 'الاستضافة والبنية التحتية', href: '/services/hosting-infrastructure' },
+        { name: 'التدريب والتوثيق', href: '/services/training-documentation' },
+        { name: 'الدعم والصيانة', href: '/services/support-maintenance' },
+        { name: 'الاستشارات والتحسين', href: '/services/consultancy-optimization' },
+        { name: 'تطوير المواقع والتجارة الالكترونية', href: '/services/website-ecommerce' }
+      ]
+    },
+    industries: {
+      title: 'الصناعات',
+      items: [
+        { name: 'البناء والمقاولات', href: '/industries/construction' },
+        { name: 'التصنيع والصيانة', href: '/industries/manufacturing' },
+        { name: 'الجملة والتجزئة', href: '/industries/retail' },
+        { name: 'الضيافة والتعليم والخدمات', href: '/industries/services' }
+      ]
+    }
+  },
+  en: {
+    company: 'ToDoOps',
+    tagline: 'Professional ERP Services',
+    nav: {
+      home: 'Home',
+      about: 'About',
+      services: 'Services',
+      industries: 'Industries',
+      odooApps: 'Odoo Apps',
+      blog: 'Blog',
+      contact: 'Contact'
+    },
+    cta: 'Book Free Consultation',
+    services: {
+      title: 'Our Services',
+      items: [
+        { name: 'Full Odoo ERP Implementation', href: '/en/services/odoo-implementation' },
+        { name: 'Business Analysis & Requirements Gathering', href: '/en/services/business-analysis' },
+        { name: 'Odoo Implementation & Module Configuration', href: '/en/services/module-configuration' },
+        { name: 'Customization & Development', href: '/en/services/customization-development' },
+        { name: 'Data Migration', href: '/en/services/data-migration' },
+        { name: 'Hosting & Infrastructure', href: '/en/services/hosting-infrastructure' },
+        { name: 'Training & Documentation', href: '/en/services/training-documentation' },
+        { name: 'Support & Maintenance', href: '/en/services/support-maintenance' },
+        { name: 'Consultancy & Optimization', href: '/en/services/consultancy-optimization' },
+        { name: 'Website & eCommerce Development', href: '/en/services/website-ecommerce' }
+      ]
+    },
+    industries: {
+      title: 'Industries',
+      items: [
+        { name: 'Construction & Contracting', href: '/en/industries/construction' },
+        { name: 'Manufacturing & Maintenance', href: '/en/industries/manufacturing' },
+        { name: 'Wholesale & Retail', href: '/en/industries/retail' },
+        { name: 'Hospitality, Education & Services', href: '/en/industries/services' }
+      ]
+    }
+  }
+};
+
+const t = content[lang];
+const otherLang = lang === 'ar' ? 'en' : 'ar';
+
+// Get current path and determine the appropriate language switch URL
+const currentPath = Astro.url.pathname;
+
+// Function to determine the other language URL based on current path
+function getOtherLangUrl(currentPath: string, currentLang: 'ar' | 'en'): string {
+  // Remove trailing slash for consistency
+  const cleanPath = currentPath.replace(/\/$/, '') || '/';
+  
+  if (currentLang === 'ar') {
+    // Currently on Arabic page, switching to English
+    if (cleanPath === '/faq') {
+      return '/en/faq';
+    } else if (cleanPath.startsWith('/blog')) {
+      if (cleanPath === '/blog') {
+        return '/en/blog';
+      } else if (cleanPath.startsWith('/blog/category/')) {
+        const categorySlug = cleanPath.replace('/blog/category/', '');
+        return `/en/blog/category/${categorySlug}`;
+      } else {
+        // For individual blog posts
+        const postSlug = cleanPath.replace('/blog/', '');
+        return `/en/blog/${postSlug}`;
+      }
+    } else if (cleanPath.startsWith('/services')) {
+      if (cleanPath === '/services') {
+        return '/en/services';
+      } else {
+        const serviceSlug = cleanPath.replace('/services/', '');
+        return `/en/services/${serviceSlug}`;
+      }
+    } else if (cleanPath.startsWith('/industries')) {
+      if (cleanPath === '/industries') {
+        return '/en/industries';
+      } else {
+        const industrySlug = cleanPath.replace('/industries/', '');
+        return `/en/industries/${industrySlug}`;
+      }
+    } else if (cleanPath.startsWith('/odoo-apps')) {
+      if (cleanPath === '/odoo-apps') {
+        return '/en/odoo-apps';
+      } else {
+        const appPath = cleanPath.replace('/odoo-apps/', '');
+        return `/en/odoo-apps/${appPath}`;
+      }
+    } else if (cleanPath === '/about-us') {
+      return '/en/about-us';
+    } else if (cleanPath === '/contact') {
+      return '/en/contact';
+    } else if (cleanPath === '/') {
+      return '/en';
+    } else {
+      // For other Arabic pages, go to English homepage
+      return '/en';
+    }
+  } else {
+    // Currently on English page, switching to Arabic
+    if (cleanPath === '/en/faq') {
+      return '/faq';
+    } else if (cleanPath.startsWith('/en/blog')) {
+      if (cleanPath === '/en/blog') {
+        return '/blog';
+      } else if (cleanPath.startsWith('/en/blog/category/')) {
+        const categorySlug = cleanPath.replace('/en/blog/category/', '');
+        return `/blog/category/${categorySlug}`;
+      } else {
+        // For individual blog posts
+        const postSlug = cleanPath.replace('/en/blog/', '');
+        return `/blog/${postSlug}`;
+      }
+    } else if (cleanPath.startsWith('/en/services')) {
+      if (cleanPath === '/en/services') {
+        return '/services';
+      } else {
+        const serviceSlug = cleanPath.replace('/en/services/', '');
+        return `/services/${serviceSlug}`;
+      }
+    } else if (cleanPath.startsWith('/en/industries')) {
+      if (cleanPath === '/en/industries') {
+        return '/industries';
+      } else {
+        const industrySlug = cleanPath.replace('/en/industries/', '');
+        return `/industries/${industrySlug}`;
+      }
+    } else if (cleanPath.startsWith('/en/odoo-apps')) {
+      if (cleanPath === '/en/odoo-apps') {
+        return '/odoo-apps';
+      } else {
+        const appPath = cleanPath.replace('/en/odoo-apps/', '');
+        return `/odoo-apps/${appPath}`;
+      }
+    } else if (cleanPath === '/en/about-us') {
+      return '/about-us';
+    } else if (cleanPath === '/en/contact') {
+      return '/contact';
+    } else if (cleanPath === '/en') {
+      return '/';
+    } else {
+      // For other English pages, go to Arabic homepage
+      return '/';
+    }
+  }
+}
+
+const otherLangUrl = getOtherLangUrl(currentPath, lang);
+---
+
+<header class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="flex items-center space-x-3 rtl:space-x-reverse">
+        <ToDoOpsLogo size={40} variant="default" />
+        <div>
+          <h1 class="text-xl font-bold text-dark-900 flex items-center">
+            <span class="text-odoo-purple" dir="ltr">ToDoOps</span>
+          </h1>
+          <p class="text-sm text-odoo-purple">{t.tagline}</p>
+        </div>
+      </div>
+
+      <!-- Navigation - Desktop -->
+      <nav class="hidden md:flex items-center space-x-8 rtl:space-x-reverse">
+        <a href={lang === 'ar' ? '/' : '/en'} class="text-dark-700 hover:text-odoo-purple transition-colors duration-200 font-medium">
+          {t.nav.home}
+        </a>
+        <a href={lang === 'ar' ? '/about-us' : '/en/about-us'} class="text-dark-700 hover:text-odoo-purple transition-colors duration-200 font-medium">
+          {t.nav.about}
+        </a>
+        <div class="relative group">
+          <a href={lang === 'ar' ? '/services' : '/en/services'} class="text-dark-700 hover:text-odoo-purple transition-colors duration-200 font-medium flex items-center">
+            {t.nav.services}
+            <svg class="w-4 h-4 ml-1 rtl:ml-0 rtl:mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </a>
+          <!-- Services Dropdown -->
+          <ServicesDropdown lang={lang} />
+        </div>
+        <div class="relative group">
+          <a href={lang === 'ar' ? '/industries' : '/en/industries'} class="text-dark-700 hover:text-odoo-purple transition-colors duration-200 font-medium flex items-center">
+            {t.nav.industries}
+            <svg class="w-4 h-4 ml-1 rtl:ml-0 rtl:mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </a>
+          <!-- Industries Dropdown -->
+          <IndustriesDropdown lang={lang} />
+        </div>
+        <div class="relative group">
+          <a href={lang === 'ar' ? '/odoo-apps' : '/en/odoo-apps'} class="text-dark-700 hover:text-odoo-purple transition-colors duration-200 font-medium flex items-center">
+            {t.nav.odooApps}
+            <svg class="w-4 h-4 ml-1 rtl:ml-0 rtl:mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </a>
+          <!-- Odoo Apps Dropdown -->
+          <OdooAppsDropdown lang={lang} />
+        </div>
+        <a href={lang === 'ar' ? '/blog' : '/en/blog'} class="text-dark-700 hover:text-odoo-purple transition-colors duration-200 font-medium">
+          {t.nav.blog}
+        </a>
+        <a href={lang === 'ar' ? '/contact' : '/en/contact'} class="text-dark-700 hover:text-odoo-purple transition-colors duration-200 font-medium">
+          {t.nav.contact}
+        </a>
+      </nav>
+
+      <!-- Language Switcher & CTA -->
+      <div class="flex items-center space-x-4 rtl:space-x-reverse">
+        <!-- Enhanced Saudi-flag themed language switcher -->
+        <a href={otherLangUrl} id="lang-switcher" class="lang-switcher-ios">
+          <span class={`lang-option ${lang === 'en' ? 'active' : ''}`}>
+            <span class="lang-text">EN</span>
+          </span>
+          <span class={`lang-option ${lang === 'ar' ? 'active' : ''} saudi-flag-option`}>
+            <span class="lang-text">AR</span>
+            <div class="saudi-flag"></div>
+          </span>
+        </a>
+        <a href={lang === 'ar' ? '/contact' : '/en/contact'} class="bg-odoo-purple text-white px-6 py-2 rounded-lg font-medium hover:bg-purple-800 transition-colors duration-200 shadow-md hover:shadow-lg">
+          {t.cta}
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* Enhanced iOS-style language switcher with Saudi flag */
+  .lang-switcher-ios {
+    display: flex;
+    background-color: #e4e4e7; /* iOS-style gray background */
+    border-radius: 8px;
+    padding: 2px;
+    position: relative;
+    min-width: 80px;
+    height: 32px;
+    overflow: hidden;
+    text-decoration: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .lang-option {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: #71717a;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    z-index: 1;
+    padding: 0 8px;
+    position: relative;
+  }
+
+  .lang-option .lang-text {
+    position: relative;
+    z-index: 3;
+    transition: all 0.2s ease;
+  }
+
+  .lang-option.active {
+    color: #1f2937;
+    font-weight: 600;
+  }
+
+  .lang-option.active .lang-text {
+    opacity: 1;
+  }
+
+  /* Saudi flag option styling */
+  .saudi-flag-option {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Saudi flag implementation */
+  .saudi-flag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #006c35; /* Saudi flag green */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 90'%3E%3Crect width='150' height='90' fill='%23006c35'/%3E%3Cpath d='M39,45 c0,0 4,7 16,7 c12,0 16,-7 16,-7 c0,0 -4,-7 -16,-7 c-12,0 -16,7 -16,7 M75,45 h40 M75,35 v20' stroke='white' stroke-width='3' fill='none'/%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.25; /* Make flag visible but subtle in both languages */
+    z-index: 1;
+    transition: opacity 0.3s ease;
+    border-radius: 5px;
+  }
+
+  /* Create the iOS-style selected background */
+  .lang-switcher-ios::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 50%;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    z-index: 0;
+  }
+
+  /* Adjust the selected background position based on language */
+  html[lang="en"] .lang-switcher-ios::before {
+    left: 2px;
+    right: 50%;
+  }
+
+  html[lang="ar"] .lang-switcher-ios::before {
+    left: 50%;
+    right: 2px;
+  }
+
+  /* Hover effects */
+  .lang-switcher-ios:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+
+  .lang-option:hover .lang-text {
+    color: #111827; /* Darker text on hover */
+  }
+
+  .saudi-flag-option:hover .saudi-flag {
+    opacity: 0.35; /* Increase flag visibility on hover */
+  }
+
+  .saudi-flag-option.active:hover .saudi-flag {
+    opacity: 0.4; /* Even more visible when active and hovered */
+  }
+
+  /* Active state enhancements */
+  .saudi-flag-option.active .lang-text {
+    color: #006c35; /* Saudi flag green */
+    font-weight: 700;
+  }
+
+  /* RTL support */
+  [dir="rtl"] .lang-switcher-ios {
+    flex-direction: row-reverse;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔍 [Header Debug] DOMContentLoaded event fired');
+    
+    const langSwitcher = document.getElementById('lang-switcher');
+    if (langSwitcher) {
+      console.log('🔍 [Header Debug] Language switcher found:', langSwitcher);
+      
+      const currentPath = window.location.pathname;
+      const currentHash = window.location.hash;
+      const originalHref = langSwitcher.getAttribute('href');
+      
+      console.log('🔍 [Header Debug] Current path:', currentPath);
+      console.log('🔍 [Header Debug] Current hash:', currentHash);
+      console.log('🔍 [Header Debug] Original href:', originalHref);
+      
+      // Check if we're on an FAQ page
+      const isFAQPage = currentPath === '/faq' || currentPath === '/en/faq';
+      console.log('🔍 [Header Debug] Is FAQ page:', isFAQPage);
+      
+      if (isFAQPage && currentHash) {
+        // Append the current hash to the language switcher URL
+        const newHref = originalHref + currentHash;
+        langSwitcher.setAttribute('href', newHref);
+        console.log('🔍 [Header Debug] Updated href with hash:', newHref);
+      } else {
+        console.log('🔍 [Header Debug] No hash to append or not FAQ page');
+      }
+      
+      // Add click event listener for additional debugging
+      langSwitcher.addEventListener('click', function(e) {
+        const finalHref = this.getAttribute('href');
+        console.log('🔍 [Header Debug] Language switcher clicked');
+        console.log('🔍 [Header Debug] Final href on click:', finalHref);
+        console.log('🔍 [Header Debug] Current hash at click time:', window.location.hash);
+        
+        // Allow the navigation to proceed
+        console.log('🔍 [Header Debug] Navigating to:', finalHref);
+      });
+    } else {
+      console.log('❌ [Header Debug] Language switcher not found!');
+    }
+  });
+</script>

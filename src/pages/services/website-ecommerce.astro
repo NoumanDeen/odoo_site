@@ -1,0 +1,75 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "تطوير المواقع والتجارة الالكترونية مع اودو في السعودية",
+  "description": "تطوير مواقع ومتاجر الكترونية متكاملة مع اودو لتوفير تجربة متميزة للعملاء",
+  "provider": {
+    "@type": "Organization",
+    "name": "ToDoOps",
+    "url": "https://todoops.com"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Saudi Arabia"
+  }
+};
+---
+
+<Layout 
+  title="تطوير المواقع والتجارة الالكترونية - ToDoOps | مواقع اودو في السعودية"
+  lang="ar" 
+  description="تطوير مواقع ومتاجر الكترونية متكاملة مع اودو لتوفير تجربة متميزة للعملاء. تطوير المواقع، متاجر الكترونية، وتكامل مع اودو."
+>
+  <Fragment slot="head">
+    <meta name="keywords" content="مواقع اودو, تجارة الكترونية اودو, تطوير مواقع, متاجر الكترونية, اودو السعودية, مواقع متكاملة" />
+    <meta property="og:title" content="تطوير المواقع والتجارة الالكترونية - ToDoOps" />
+    <meta property="og:description" content="تطوير مواقع ومتاجر الكترونية متكاملة مع اودو لتوفير تجربة متميزة للعملاء" />
+    <link rel="canonical" href="https://todoops.com/services/website-ecommerce" />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  </Fragment>
+
+  <Header lang="ar" />
+  
+  <main class="py-20 bg-white min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Hero Section -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl lg:text-5xl font-bold text-dark-900 mb-6">
+          تطوير المواقع والتجارة الالكترونية
+        </h1>
+        <p class="text-xl text-odoo-purple font-medium mb-6">
+          مواقع ومتاجر الكترونية متكاملة مع اودو
+        </p>
+        <p class="text-lg text-dark-600 max-w-4xl mx-auto leading-relaxed">
+          نقدم خدمات تطوير مواقع ومتاجر الكترونية متكاملة مع اودو لتوفير تجربة متميزة للعملاء مع تحسين التحويل والمبيعات الالكترونية.
+        </p>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="bg-gradient-to-r from-odoo-purple to-purple-800 rounded-2xl p-8 text-white text-center">
+        <h2 class="text-3xl font-bold mb-4">
+          ابدا مشروع موقعك الالكتروني
+        </h2>
+        <p class="text-xl mb-6 text-purple-100">
+          تحدث معنا لتطوير موقع او متجر الكتروني متكامل مع اودو
+        </p>
+        <a 
+          href="/contact"
+          class="inline-flex items-center bg-white text-odoo-purple px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-200 shadow-lg"
+        >
+          ابدا مشروع الموقع
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Footer lang="ar" />
+</Layout>

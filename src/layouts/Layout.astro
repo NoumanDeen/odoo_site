@@ -1,0 +1,265 @@
+---
+export interface Props {
+  title: string;
+  lang?: 'ar' | 'en';
+  description?: string;
+  canonicalUrl?: string;
+  noIndex?: boolean;
+}
+
+const { 
+  title, 
+  lang = 'ar', 
+  description = 'ToDoOps - Professional ERP implementation services in Saudi Arabia. Specialized Odoo solutions for business growth and digital transformation.',
+  canonicalUrl,
+  noIndex = false
+} = Astro.props;
+
+const isRTL = lang === 'ar';
+
+// Generate canonical URL if not provided
+const currentPath = Astro.url.pathname;
+const defaultCanonicalUrl = `https://todoops.com${currentPath}`;
+const finalCanonicalUrl = canonicalUrl || defaultCanonicalUrl;
+
+// Generate alternate language URLs
+const currentPathSegments = currentPath.split('/').filter(Boolean);
+let alternateArPath = '';
+let alternateEnPath = '';
+
+if (lang === 'ar') {
+  // Current path is Arabic, generate English path
+  if (currentPathSegments[0] === 'blog') {
+    if (currentPathSegments[1] === 'page' && currentPathSegments[2]) {
+      alternateEnPath = `/en/blog/page/${currentPathSegments[2]}`;
+    } else if (currentPathSegments[1] === 'category' && currentPathSegments[2]) {
+      alternateEnPath = `/en/blog/category/${currentPathSegments[2]}`;
+    } else if (currentPathSegments.length === 1) {
+      alternateEnPath = '/en/blog';
+    } else {
+      alternateEnPath = `/en${currentPath}`;
+    }
+  } else {
+    alternateEnPath = `/en${currentPath}`;
+  }
+  alternateArPath = currentPath;
+} else {
+  // Current path is English, generate Arabic path
+  if (currentPathSegments[0] === 'en') {
+    if (currentPathSegments[1] === 'blog') {
+      if (currentPathSegments[2] === 'page' && currentPathSegments[3]) {
+        alternateArPath = `/blog/page/${currentPathSegments[3]}`;
+      } else if (currentPathSegments[2] === 'category' && currentPathSegments[3]) {
+        alternateArPath = `/blog/category/${currentPathSegments[3]}`;
+      } else if (currentPathSegments.length === 2) {
+        alternateArPath = '/blog';
+      } else {
+        alternateArPath = currentPath.replace('/en', '');
+      }
+    } else {
+      alternateArPath = currentPath.replace('/en', '');
+    }
+  }
+  alternateEnPath = currentPath;
+}
+---
+
+<!doctype html>
+<html lang={lang} dir={isRTL ? 'rtl' : 'ltr'}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    
+    <!-- Canonical URL for SEO -->
+    <link rel="canonical" href={finalCanonicalUrl} />
+    
+    <!-- Alternate language versions -->
+    <link rel="alternate" hreflang="ar" href={`https://todoops.com${alternateArPath}`} />
+    <link rel="alternate" hreflang="en" href={`https://todoops.com${alternateEnPath}`} />
+    <link rel="alternate" hreflang="x-default" href={`https://todoops.com${alternateArPath}`} />
+    
+    <!-- Robots meta tag - noindex for paginated pages beyond page 1 -->
+    {noIndex && <meta name="robots" content="noindex,follow" />}
+    
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    
+    <!-- Preconnect to Google Fonts for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- Fallback for browsers that don't support preload -->
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    </noscript>
+    
+    <!-- Critical CSS for font loading -->
+    <style>
+      /* Font face declarations for faster rendering */
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: local('Inter Regular'), local('Inter-Regular');
+      }
+      
+      @font-face {
+        font-family: 'Noto Sans Arabic';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: local('Noto Sans Arabic Regular'), local('NotoSansArabic-Regular');
+      }
+      
+      /* Prevent layout shift during font loading */
+      .font-arabic {
+        font-family: 'Noto Sans Arabic', system-ui, -apple-system, sans-serif;
+        font-display: swap;
+      }
+      
+      .font-english {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        font-display: swap;
+      }
+      
+      /* Critical styles to prevent FOUC */
+      html, body {
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      /* Loading state styles */
+      .loading {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+      
+      .loaded {
+        opacity: 1;
+      }
+
+      /* WhatsApp floating button styles */
+      .whatsapp-float {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        right: 20px;
+        background-color: #25d366;
+        color: #FFF;
+        border-radius: 50px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+        overflow: hidden;
+      }
+
+      .whatsapp-float img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+      }
+
+      .whatsapp-float:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      }
+
+      [dir="rtl"] .whatsapp-float {
+        right: auto;
+        left: 20px;
+      }
+
+      @media screen and (max-width: 767px) {
+        .whatsapp-float {
+          width: 50px;
+          height: 50px;
+          bottom: 15px;
+          right: 15px;
+        }
+        
+        .whatsapp-float img {
+          width: 50px;
+          height: 50px;
+        }
+        
+        [dir="rtl"] .whatsapp-float {
+          right: auto;
+          left: 15px;
+        }
+      }
+
+      /* Saudi flag colors */
+      .saudi-green {
+        color: #006c35;
+      }
+      
+      .saudi-flag-bg {
+        background-color: #006c35;
+      }
+    </style>
+    
+    <slot name="head" />
+  </head>
+  <body class={`min-h-screen bg-white ${lang === 'ar' ? 'font-arabic' : 'font-english'} loading`}>
+    <slot />
+    
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/966540676575" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+      <img src="https://cdn.cdnlogo.com/logos/w/29/whatsapp-icon.svg" alt="WhatsApp" />
+    </a>
+    
+    <!-- Font loading optimization script -->
+    <script>
+      // Mark body as loaded once fonts are ready
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+          document.body.classList.remove('loading');
+          document.body.classList.add('loaded');
+        });
+      } else {
+        // Fallback for browsers without font loading API
+        setTimeout(() => {
+          document.body.classList.remove('loading');
+          document.body.classList.add('loaded');
+        }, 100);
+      }
+      
+      // Preload critical images
+      const criticalImages = [
+        // Add any critical images here that should be preloaded
+      ];
+      
+      criticalImages.forEach(src => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = src;
+        document.head.appendChild(link);
+      });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  /* Global styles moved to head for better performance */
+</style>

@@ -1,0 +1,180 @@
+---
+export interface Props {
+  lang: 'ar' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const content = {
+  ar: {
+    title: 'خدماتنا',
+    subtitle: 'حلول اودو ERP شاملة لنمو اعمالك',
+    description: 'نقدم خدمات تنفيذ اودو ERP المتخصصة للشركات في المملكة العربية السعودية مع دعم مستمر وتدريب شامل.',
+    services: [
+      {
+        title: 'تنفيذ اودو ERP الكامل',
+        description: 'تنفيذ شامل ومخصص لنظام اودو ERP ليناسب احتياجات عملك الفريدة مع ضمان الانتقال السلس من الانظمة القديمة.',
+        features: ['تحليل الاحتياجات', 'التخصيص والتطوير', 'نقل البيانات', 'الاختبار والتشغيل'],
+        link: '/services/odoo-implementation'
+      },
+      {
+        title: 'التدريب والاعداد',
+        description: 'برامج تدريبية شاملة لفريقك لضمان الاستفادة القصوى من نظام اودو ERP وتحقيق افضل النتائج.',
+        features: ['تدريب المستخدمين النهائيين', 'تدريب المديرين', 'دعم ما بعد التشغيل', 'وثائق مخصصة'],
+        link: '/services/training-documentation'
+      },
+      {
+        title: 'الدعم التقني',
+        description: 'دعم تقني مستمر لضمان عمل نظام اودو ERP بكفاءة عالية مع حل سريع لاي مشاكل تقنية قد تواجهها.',
+        features: ['دعم 24/7', 'صيانة دورية', 'تحديثات النظام', 'حل المشاكل السريع'],
+        link: '/services/support-maintenance'
+      },
+      {
+        title: 'تكامل الانظمة',
+        description: 'ربط اودو ERP مع الانظمة الاخرى في شركتك لضمان تدفق البيانات بسلاسة وتحسين الكفاءة التشغيلية.',
+        features: ['تكامل APIs', 'ربط الانظمة المحاسبية', 'تكامل التجارة الالكترونية', 'حلول مخصصة'],
+        link: '/services/customization-development'
+      }
+    ],
+    learnMore: 'تعرف على المزيد في الاسئلة الشائعة',
+    viewAllServices: 'عرض جميع خدماتنا'
+  },
+  en: {
+    title: 'Our Services',
+    subtitle: 'Comprehensive Odoo ERP Solutions for Your Business Growth',
+    description: 'We provide specialized Odoo ERP implementation services for businesses in Saudi Arabia with ongoing support and comprehensive training.',
+    services: [
+      {
+        title: 'Full Odoo ERP Implementation',
+        description: 'Complete and customized Odoo ERP implementation tailored to your unique business needs with seamless migration from legacy systems.',
+        features: ['Needs Analysis', 'Customization & Development', 'Data Migration', 'Testing & Go-Live'],
+        link: '/en/services/odoo-implementation'
+      },
+      {
+        title: 'Training & Onboarding',
+        description: 'Comprehensive training programs for your team to ensure maximum utilization of Odoo ERP and achieve optimal results.',
+        features: ['End-User Training', 'Admin Training', 'Post-Launch Support', 'Custom Documentation'],
+        link: '/en/services/training-documentation'
+      },
+      {
+        title: 'Technical Support',
+        description: 'Ongoing technical support to ensure your Odoo ERP system operates at peak efficiency with rapid resolution of any technical issues.',
+        features: ['24/7 Support', 'Regular Maintenance', 'System Updates', 'Quick Issue Resolution'],
+        link: '/en/services/support-maintenance'
+      },
+      {
+        title: 'System Integration',
+        description: 'Connect Odoo ERP with your existing systems to ensure smooth data flow and improve operational efficiency.',
+        features: ['API Integration', 'Accounting System Links', 'E-commerce Integration', 'Custom Solutions'],
+        link: '/en/services/customization-development'
+      }
+    ],
+    learnMore: 'Learn more in our FAQ',
+    viewAllServices: 'View All Our Services'
+  }
+};
+
+const t = content[lang];
+---
+
+<section id="services" class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <h2 class="text-4xl lg:text-5xl font-bold text-dark-900 mb-4">
+        {t.title}
+      </h2>
+      <p class="text-xl text-odoo-purple font-medium mb-4">
+        {t.subtitle}
+      </p>
+      <p class="text-lg text-dark-600 max-w-4xl mx-auto leading-relaxed">
+        {t.description}
+      </p>
+    </div>
+
+    <!-- Services Grid -->
+    <div class="grid md:grid-cols-2 gap-8 mb-12">
+      {t.services.map((service, index) => (
+        <div class="bg-white rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100">
+          <div class={`w-16 h-16 rounded-xl flex items-center justify-center mb-6 ${
+            index === 0 ? 'bg-odoo-accent/20' :
+            index === 1 ? 'bg-green-100' :
+            index === 2 ? 'bg-blue-100' : 'bg-orange-100'
+          }`}>
+            <svg class={`w-8 h-8 ${
+              index === 0 ? 'text-odoo-purple' :
+              index === 1 ? 'text-green-600' :
+              index === 2 ? 'text-blue-600' : 'text-orange-600'
+            }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {index === 0 && (
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              )}
+              {index === 1 && (
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+              )}
+              {index === 2 && (
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+              )}
+              {index === 3 && (
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              )}
+            </svg>
+          </div>
+          
+          <h3 class="text-2xl font-bold text-dark-900 mb-4">
+            <a href={service.link} class="hover:text-odoo-purple transition-colors duration-200">
+              {service.title}
+            </a>
+          </h3>
+          
+          <p class="text-dark-600 mb-6 leading-relaxed">
+            {service.description}
+          </p>
+          
+          <ul class="space-y-3">
+            {service.features.map((feature) => (
+              <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                <div class="w-5 h-5 bg-odoo-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <svg class="w-3 h-3 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </div>
+                <span class="text-dark-700 font-medium">{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <!-- View All Services Button -->
+    <div class="text-center mb-8">
+      <a href={lang === 'ar' ? '/services' : '/en/services'} class="inline-flex items-center text-odoo-purple hover:text-purple-800 font-medium transition-colors duration-200 bg-white px-6 py-3 rounded-lg shadow-md hover:shadow-lg">
+        {t.viewAllServices}
+        <svg class={`w-4 h-4 ml-2 rtl:ml-0 rtl:mr-2 ${lang === 'ar' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Learn More Link -->
+    <div class="text-center mb-8">
+      <a href={lang === 'ar' ? '/faq' : '/en/faq'} class="inline-flex items-center text-odoo-purple hover:text-purple-800 font-medium transition-colors duration-200">
+        {t.learnMore}
+        <svg class={`w-4 h-4 ml-2 rtl:ml-0 rtl:mr-2 ${lang === 'ar' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center">
+      <a href={lang === 'ar' ? '/contact' : '/en/contact'} class="inline-flex items-center bg-odoo-purple text-white px-8 py-4 rounded-lg font-semibold hover:bg-purple-800 transition-all duration-200 shadow-lg hover:shadow-xl">
+        {lang === 'ar' ? 'احجز استشارة مجانية' : 'Book Free Consultation'}
+        <svg class={`w-5 h-5 ml-2 rtl:ml-0 rtl:mr-2 ${lang === 'ar' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

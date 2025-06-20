@@ -1,0 +1,169 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import BlogCard from '../../../components/BlogCard.astro';
+import { fetchBlogData } from '../../../lib/blog';
+
+// Fetch all blog posts for English
+const blogData = await fetchBlogData('en');
+const { posts, categories, tags } = blogData;
+
+// Build canonical URL
+const canonicalUrl = `https://todoops.com/en/blog`;
+
+// Prepare structured data for blog listing
+const blogListingSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": posts.map((post, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "url": `https://todoops.com/en/blog/${post.slug}`,
+      "name": post.title
+    })),
+    "numberOfItems": posts.length,
+    "itemListOrder": "https://schema.org/ItemListOrderDescending"
+  },
+  "url": canonicalUrl,
+  "name": "Blog - ToDoOps | Articles about ERP Systems and Digital Transformation",
+  "description": "Discover the latest articles about ERP systems, Odoo, and digital transformation in Saudi Arabia. Tips and guidance from certified Odoo experts."
+};
+
+// Add breadcrumb schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": `https://todoops.com/en`
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": `https://todoops.com/en/blog`
+    }
+  ]
+};
+---
+
+<Layout 
+  title="Blog - ToDoOps | Articles about ERP Systems and Digital Transformation"
+  lang="en" 
+  description="Discover the latest articles about ERP systems, Odoo, and digital transformation in Saudi Arabia. Tips and guidance from certified Odoo experts."
+  canonicalUrl={canonicalUrl}
+>
+  <Fragment slot="head">
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Blog - ToDoOps | Articles about ERP Systems and Digital Transformation" />
+    <meta property="og:description" content="Discover the latest articles about ERP systems, Odoo, and digital transformation in Saudi Arabia. Tips and guidance from certified Odoo experts." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Blog - ToDoOps | Articles about ERP Systems and Digital Transformation" />
+    <meta name="twitter:description" content="Discover the latest articles about ERP systems, Odoo, and digital transformation in Saudi Arabia." />
+    <meta name="twitter:image" content="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg" />
+    
+    <!-- Structured data for blog listing -->
+    <script type="application/ld+json" set:html={JSON.stringify(blogListingSchema)} />
+    
+    <!-- Breadcrumb structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  </Fragment>
+
+  <Header lang="en" />
+  
+  <main class="py-20 bg-gray-50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl lg:text-5xl font-bold text-dark-900 mb-4">
+          ToDoOps Blog
+        </h1>
+        <p class="text-xl text-odoo-purple font-medium mb-4">
+          Specialized articles about ERP systems and digital transformation
+        </p>
+        <p class="text-lg text-dark-600 max-w-3xl mx-auto">
+          Discover the latest trends and practical tips about implementing Odoo ERP systems and improving business operations in Saudi Arabia.
+        </p>
+      </div>
+
+      <!-- Categories Filter -->
+      {categories.length > 0 && (
+        <div class="mb-12">
+          <div class="flex flex-wrap justify-center gap-3">
+            <a 
+              href="/en/blog" 
+              class="px-4 py-2 rounded-lg font-medium transition-all duration-200 bg-odoo-purple text-white shadow-md"
+            >
+              All Articles
+            </a>
+            
+            {categories.map((category) => (
+              <a 
+                href={`/en/blog/category/${category.slug}`}
+                class="px-4 py-2 rounded-lg font-medium transition-all duration-200 bg-gray-100 text-dark-700 hover:bg-odoo-accent/20 hover:text-odoo-purple"
+              >
+                {category.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Blog Posts Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        {posts.map((post, index) => (
+          <BlogCard post={post} lang="en" priority={index < 3} />
+        ))}
+      </div>
+
+      <!-- No Posts Message (shown when no posts are available) -->
+      {posts.length === 0 && (
+        <div class="text-center py-12">
+          <svg class="w-16 h-16 mx-auto mb-4 text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+          </svg>
+          <h3 class="text-lg font-semibold mb-2 text-dark-900">No articles available yet</h3>
+          <p class="text-dark-600">New articles will be added soon. Please check back later.</p>
+        </div>
+      )}
+
+      <!-- Newsletter CTA -->
+      <div class="mt-16 bg-gradient-to-r from-odoo-purple to-purple-800 rounded-2xl p-8 text-white text-center">
+        <h3 class="text-2xl font-bold mb-4">
+          Stay Updated with Latest Articles
+        </h3>
+        <p class="text-xl mb-6 text-purple-100">
+          Get tips and guidance about ERP systems and digital transformation directly in your inbox.
+        </p>
+        <a 
+          href="/en/contact"
+          class="inline-flex items-center bg-white text-odoo-purple px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-200 shadow-lg"
+        >
+          Contact Us
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Footer lang="en" />
+</Layout>
+
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

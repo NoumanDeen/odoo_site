@@ -1,0 +1,350 @@
+---
+import { fetchFAQData, normalizeArabicText } from '../lib/supabase';
+
+export interface Props {
+  lang: 'ar' | 'en';
+}
+
+const { lang } = Astro.props;
+
+// Fetch FAQ data
+const faqData = await fetchFAQData(lang);
+
+// Normalize Arabic text in FAQ data
+if (lang === 'ar') {
+  faqData.categories.forEach(category => {
+    category.name = normalizeArabicText(category.name);
+  });
+  
+  Object.values(faqData.questionsByCategory).forEach(questions => {
+    questions.forEach(question => {
+      question.question = normalizeArabicText(question.question);
+      question.answer = normalizeArabicText(question.answer);
+    });
+  });
+}
+
+const content = {
+  ar: {
+    title: 'الاسئلة الشائعة',
+    subtitle: 'اجابات لاكثر الاسئلة شيوعاً حول اودو ERP',
+    description: 'اكتشف اجابات لاكثر الاسئلة شيوعاً حول تنفيذ اودو ERP، التراخيص، التدريب، والدعم التقني في المملكة العربية السعودية.',
+    searchPlaceholder: 'ابحث عن سؤال...',
+    noResults: 'لم يتم العثور على نتائج. جرب كلمات مختلفة.',
+    allCategories: 'جميع الفئات',
+    contactUs: 'لم تجد ما تبحث عنه؟ تواصل معنا',
+    contactLink: '/contact'
+  },
+  en: {
+    title: 'Frequently Asked Questions',
+    subtitle: 'Answers to the most common questions about Odoo ERP',
+    description: 'Discover answers to the most frequently asked questions about Odoo ERP implementation, licensing, training, and technical support in Saudi Arabia.',
+    searchPlaceholder: 'Search for a question...',
+    noResults: 'No results found. Try different keywords.',
+    allCategories: 'All Categories',
+    contactUs: 'Didn\'t find what you\'re looking for? Contact us',
+    contactLink: '/en/contact'
+  }
+};
+
+const t = content[lang];
+---
+
+<section class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <h1 class="text-4xl lg:text-5xl font-bold text-dark-900 mb-4">
+        {t.title}
+      </h1>
+      <p class="text-xl text-odoo-purple font-medium mb-4">
+        {t.subtitle}
+      </p>
+      <p class="text-lg text-dark-600 max-w-3xl mx-auto">
+        {t.description}
+      </p>
+    </div>
+
+    <!-- Search and Categories -->
+    <div class="mb-12">
+      <!-- Search -->
+      <div class="max-w-2xl mx-auto mb-8">
+        <div class="relative">
+          <input 
+            type="text" 
+            id="faq-search"
+            placeholder={t.searchPlaceholder}
+            class="w-full px-4 py-3 pr-12 rtl:pr-4 rtl:pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-odoo-purple focus:border-odoo-purple transition-colors duration-200"
+          />
+          <div class="absolute right-3 rtl:right-auto rtl:left-3 top-1/2 transform -translate-y-1/2 text-dark-500">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div class="flex flex-wrap justify-center gap-3 mb-8">
+        <button 
+          class="category-btn px-4 py-2 rounded-lg font-medium transition-all duration-200 bg-odoo-purple text-white shadow-lg"
+          data-category="all"
+        >
+          {t.allCategories}
+        </button>
+        
+        {faqData.categories.map((category) => (
+          <button 
+            class="category-btn px-4 py-2 rounded-lg font-medium transition-all duration-200 bg-gray-100 text-dark-700 hover:bg-odoo-accent/20 hover:text-odoo-purple"
+            data-category={category.slug}
+          >
+            {category.name}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div class="max-w-4xl mx-auto">
+      <div id="no-results-message" class="hidden text-center py-8">
+        <p class="text-dark-600">{t.noResults}</p>
+      </div>
+
+      {faqData.categories.map((category) => (
+        <div class="faq-category mb-12" data-category={category.slug}>
+          <h2 class="text-2xl font-bold text-dark-900 mb-6" id={category.slug}>
+            {category.name}
+          </h2>
+          
+          <div class="space-y-4">
+            {faqData.questionsByCategory[category.slug]?.map((question, index) => (
+              <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden">
+                <button 
+                  class="faq-question w-full text-left px-6 py-4 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-odoo-purple/50"
+                  aria-expanded="false"
+                  aria-controls={`faq-answer-${category.slug}-${index}`}
+                >
+                  <span class="font-semibold text-dark-900 pr-8">{question.question}</span>
+                  <svg class="faq-icon w-6 h-6 text-odoo-purple transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </button>
+                <div 
+                  id={`faq-answer-${category.slug}-${index}`}
+                  class="faq-answer px-6 pb-4 hidden"
+                >
+                  <div class="prose prose-lg max-w-none text-dark-600" set:html={question.answer}></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Contact CTA -->
+    <div class="text-center mt-12">
+      <p class="text-lg text-dark-600 mb-4">{t.contactUs}</p>
+      <a 
+        href={t.contactLink}
+        class="inline-flex items-center bg-odoo-purple text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-800 transition-all duration-200 shadow-md"
+      >
+        {lang === 'ar' ? 'تواصل معنا' : 'Contact Us'}
+        <svg class={`w-5 h-5 ml-2 rtl:ml-0 rtl:mr-2 ${lang === 'ar' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // FAQ Accordion functionality
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+      question.addEventListener('click', () => {
+        const answer = question.nextElementSibling;
+        const icon = question.querySelector('.faq-icon');
+        
+        // Toggle current question
+        const isExpanded = question.getAttribute('aria-expanded') === 'true';
+        question.setAttribute('aria-expanded', (!isExpanded).toString());
+        
+        if (isExpanded) {
+          answer.classList.add('hidden');
+          icon.classList.remove('rotate-180');
+        } else {
+          answer.classList.remove('hidden');
+          icon.classList.add('rotate-180');
+        }
+      });
+    });
+    
+    // Category filtering
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const faqCategories = document.querySelectorAll('.faq-category');
+    
+    categoryButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        const category = button.getAttribute('data-category');
+        
+        // Update active button
+        categoryButtons.forEach(btn => {
+          btn.classList.remove('bg-odoo-purple', 'text-white', 'shadow-lg');
+          btn.classList.add('bg-gray-100', 'text-dark-700');
+        });
+        
+        button.classList.remove('bg-gray-100', 'text-dark-700');
+        button.classList.add('bg-odoo-purple', 'text-white', 'shadow-lg');
+        
+        // Show/hide categories
+        if (category === 'all') {
+          faqCategories.forEach(cat => {
+            cat.classList.remove('hidden');
+          });
+        } else {
+          faqCategories.forEach(cat => {
+            if (cat.getAttribute('data-category') === category) {
+              cat.classList.remove('hidden');
+            } else {
+              cat.classList.add('hidden');
+            }
+          });
+        }
+        
+        // Reset search
+        document.getElementById('faq-search').value = '';
+        document.getElementById('no-results-message').classList.add('hidden');
+        
+        // Show all questions in visible categories
+        const visibleCategories = document.querySelectorAll('.faq-category:not(.hidden)');
+        visibleCategories.forEach(category => {
+          const questions = category.querySelectorAll('.faq-item');
+          questions.forEach(question => {
+            question.classList.remove('hidden');
+          });
+        });
+      });
+    });
+    
+    // Search functionality
+    const searchInput = document.getElementById('faq-search');
+    const noResultsMessage = document.getElementById('no-results-message');
+    
+    searchInput.addEventListener('input', () => {
+      const searchTerm = searchInput.value.toLowerCase().trim();
+      
+      if (searchTerm === '') {
+        // Reset to current category view
+        const activeCategory = document.querySelector('.category-btn.bg-odoo-purple').getAttribute('data-category');
+        
+        if (activeCategory === 'all') {
+          faqCategories.forEach(category => {
+            category.classList.remove('hidden');
+            const questions = category.querySelectorAll('.faq-item');
+            questions.forEach(question => {
+              question.classList.remove('hidden');
+            });
+          });
+        } else {
+          faqCategories.forEach(category => {
+            if (category.getAttribute('data-category') === activeCategory) {
+              category.classList.remove('hidden');
+              const questions = category.querySelectorAll('.faq-item');
+              questions.forEach(question => {
+                question.classList.remove('hidden');
+              });
+            } else {
+              category.classList.add('hidden');
+            }
+          });
+        }
+        
+        noResultsMessage.classList.add('hidden');
+        return;
+      }
+      
+      // Show all categories for search
+      faqCategories.forEach(category => {
+        category.classList.remove('hidden');
+      });
+      
+      // Filter questions
+      let matchFound = false;
+      
+      faqCategories.forEach(category => {
+        const questions = category.querySelectorAll('.faq-item');
+        let categoryHasMatches = false;
+        
+        questions.forEach(item => {
+          const questionText = item.querySelector('.faq-question span').textContent.toLowerCase();
+          const answerText = item.querySelector('.faq-answer').textContent.toLowerCase();
+          
+          if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+            item.classList.remove('hidden');
+            categoryHasMatches = true;
+            matchFound = true;
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+        
+        // Hide category if no matches
+        if (!categoryHasMatches) {
+          category.classList.add('hidden');
+        }
+      });
+      
+      // Show/hide no results message
+      if (matchFound) {
+        noResultsMessage.classList.add('hidden');
+      } else {
+        noResultsMessage.classList.remove('hidden');
+      }
+    });
+    
+    // Handle hash links for direct category access
+    function handleHashChange() {
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        const targetCategory = document.querySelector(`.category-btn[data-category="${hash}"]`);
+        if (targetCategory) {
+          targetCategory.click();
+          
+          // Scroll to the category
+          const categoryHeading = document.getElementById(hash);
+          if (categoryHeading) {
+            setTimeout(() => {
+              categoryHeading.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }
+        }
+      }
+    }
+    
+    // Initial hash handling
+    handleHashChange();
+    
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+  });
+</script>
+
+<style>
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+  
+  .faq-answer:not(.hidden) {
+    max-height: 1000px; /* Arbitrary large value */
+    transition: max-height 0.5s ease-in;
+  }
+  
+  .faq-icon {
+    transition: transform 0.3s ease;
+  }
+</style>

@@ -1,0 +1,75 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Odoo Training & Documentation in Saudi Arabia",
+  "description": "Comprehensive training programs for your team with detailed documentation to ensure maximum utilization of your Odoo system",
+  "provider": {
+    "@type": "Organization",
+    "name": "ToDoOps",
+    "url": "https://your-domain.com"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Saudi Arabia"
+  }
+};
+---
+
+<Layout 
+  title="Odoo Training & Documentation - ToDoOps | Odoo Training Programs in Saudi Arabia"
+  lang="en" 
+  description="Comprehensive training programs for your team with detailed documentation to ensure maximum utilization of your Odoo system. End-user training, admin training, and custom guides."
+>
+  <Fragment slot="head">
+    <meta name="keywords" content="Odoo training, ERP training, Odoo courses, Odoo documentation, Odoo Saudi Arabia, user training" />
+    <meta property="og:title" content="Odoo Training & Documentation - ToDoOps" />
+    <meta property="og:description" content="Comprehensive training programs for your team with detailed documentation to ensure maximum utilization of your Odoo system" />
+    <link rel="canonical" href="https://your-domain.com/en/services/training-documentation" />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  </Fragment>
+
+  <Header lang="en" />
+  
+  <main class="py-20 bg-white min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Hero Section -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl lg:text-5xl font-bold text-dark-900 mb-6">
+          Odoo Training & Documentation
+        </h1>
+        <p class="text-xl text-odoo-purple font-medium mb-6">
+          Comprehensive training programs to ensure your team masters Odoo
+        </p>
+        <p class="text-lg text-dark-600 max-w-4xl mx-auto leading-relaxed">
+          We provide comprehensive training programs for your team with detailed documentation to ensure maximum utilization of your Odoo system and achieve the best results in your daily work.
+        </p>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="bg-gradient-to-r from-odoo-purple to-purple-800 rounded-2xl p-8 text-white text-center">
+        <h2 class="text-3xl font-bold mb-4">
+          Start Training Your Team on Odoo
+        </h2>
+        <p class="text-xl mb-6 text-purple-100">
+          Book a customized training program for your team to master Odoo usage
+        </p>
+        <a 
+          href="/en/contact"
+          class="inline-flex items-center bg-white text-odoo-purple px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-200 shadow-lg"
+        >
+          Book Training Program
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Footer lang="en" />
+</Layout>

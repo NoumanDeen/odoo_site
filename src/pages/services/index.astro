@@ -1,0 +1,316 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const services = [
+  {
+    title: 'تنفيذ اودو ERP الكامل',
+    slug: 'odoo-implementation',
+    description: 'تنفيذ شامل ومخصص لنظام اودو ERP ليناسب احتياجات عملك الفريدة مع ضمان الانتقال السلس من الانظمة القديمة.',
+    icon: 'implementation',
+    features: ['تحليل الاحتياجات', 'التخصيص والتطوير', 'نقل البيانات', 'التدريب والدعم']
+  },
+  {
+    title: 'تحليل الاعمال وجمع المتطلبات',
+    slug: 'business-analysis',
+    description: 'دراسة شاملة لعمليات شركتك الحالية وتحديد المتطلبات الدقيقة لضمان نجاح تطبيق نظام اودو ERP.',
+    icon: 'analysis',
+    features: ['تحليل العمليات', 'تحديد المتطلبات', 'وضع الاستراتيجية', 'التخطيط للتنفيذ']
+  },
+  {
+    title: 'تنفيذ اودو وتكوين الوحدات',
+    slug: 'module-configuration',
+    description: 'تكوين واعداد وحدات اودو المختلفة لتتناسب مع عمليات شركتك وتحقق اقصى استفادة من النظام.',
+    icon: 'modules',
+    features: ['تكوين الوحدات', 'اعداد سير العمل', 'تخصيص الواجهات', 'اختبار الوظائف']
+  },
+  {
+    title: 'التخصيص والتطوير',
+    slug: 'customization-development',
+    description: 'تطوير حلول مخصصة وتعديل اودو ليتناسب مع احتياجاتك الخاصة وعمليات عملك الفريدة.',
+    icon: 'development',
+    features: ['تطوير مخصص', 'انشاء تقارير', 'تكامل APIs', 'تطوير الوحدات']
+  },
+  {
+    title: 'نقل البيانات',
+    slug: 'data-migration',
+    description: 'نقل امن ودقيق لجميع بياناتك من الانظمة القديمة الى اودو مع ضمان سلامة وصحة البيانات.',
+    icon: 'migration',
+    features: ['تحليل البيانات', 'تنظيف البيانات', 'النقل الامن', 'التحقق والاختبار']
+  },
+  {
+    title: 'الاستضافة والبنية التحتية',
+    slug: 'hosting-infrastructure',
+    description: 'حلول استضافة موثوقة وامنة لنظام اودو مع ضمان الاداء العالي والحماية المتقدمة.',
+    icon: 'hosting',
+    features: ['استضافة سحابية', 'النسخ الاحتياطي', 'الامان المتقدم', 'مراقبة الاداء']
+  },
+  {
+    title: 'التدريب والتوثيق',
+    slug: 'training-documentation',
+    description: 'برامج تدريبية شاملة لفريقك مع توثيق مفصل لضمان الاستفادة القصوى من نظام اودو.',
+    icon: 'training',
+    features: ['تدريب المستخدمين', 'تدريب المديرين', 'ادلة مخصصة', 'ورش عمل متقدمة']
+  },
+  {
+    title: 'الدعم والصيانة',
+    slug: 'support-maintenance',
+    description: 'دعم تقني مستمر وصيانة دورية لضمان عمل نظام اودو بكفاءة عالية وحل اي مشاكل بسرعة.',
+    icon: 'support',
+    features: ['دعم 24/7', 'صيانة دورية', 'تحديثات النظام', 'حل المشاكل السريع']
+  },
+  {
+    title: 'الاستشارات والتحسين',
+    slug: 'consultancy-optimization',
+    description: 'استشارات متخصصة لتحسين اداء نظام اودو وتطوير العمليات لتحقيق افضل النتائج.',
+    icon: 'consulting',
+    features: ['تحليل الاداء', 'تحسين العمليات', 'استشارات استراتيجية', 'تطوير مستمر']
+  },
+  {
+    title: 'تطوير المواقع والتجارة الالكترونية',
+    slug: 'website-ecommerce',
+    description: 'تطوير مواقع ومتاجر الكترونية متكاملة مع اودو لتوفير تجربة متميزة للعملاء.',
+    icon: 'ecommerce',
+    features: ['تطوير المواقع', 'متاجر الكترونية', 'تكامل مع اودو', 'تحسين التحويل']
+  }
+];
+
+const getIcon = (iconType: string) => {
+  const icons = {
+    implementation: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>',
+    analysis: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>',
+    modules: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>',
+    development: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>',
+    migration: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>',
+    hosting: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>',
+    training: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>',
+    support: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>',
+    consulting: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>',
+    ecommerce: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1 7a2 2 0 01-2 2H8a2 2 0 01-2-2L5 9z"></path>'
+  };
+  return icons[iconType] || icons.implementation;
+};
+
+// Generate JSON-LD structured data
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "خدمات اودو ERP في السعودية",
+  "description": "خدمات تنفيذ اودو ERP المتخصصة في المملكة العربية السعودية من شريك اودو المعتمد",
+  "provider": {
+    "@type": "Organization",
+    "name": "ToDoOps",
+    "url": "https://todoops.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "SA",
+      "addressRegion": "الرياض"
+    }
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Saudi Arabia"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "خدمات اودو ERP",
+    "itemListElement": services.map((service, index) => ({
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": service.title,
+        "description": service.description
+      }
+    }))
+  }
+};
+---
+
+<Layout 
+  title="خدمات اودو ERP في السعودية - ToDoOps | شريك اودو المعتمد"
+  lang="ar" 
+  description="خدمات تنفيذ اودو ERP المتخصصة في المملكة العربية السعودية. تنفيذ، تخصيص، تدريب، ودعم شامل من شريك اودو المعتمد."
+>
+  <Fragment slot="head">
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="خدمات اودو ERP في السعودية, شريك اودو المعتمد, تنفيذ اودو, تخصيص اودو, دعم اودو, تدريب اودو" />
+    <meta property="og:title" content="خدمات اودو ERP في السعودية - ToDoOps" />
+    <meta property="og:description" content="خدمات تنفيذ اودو ERP المتخصصة في المملكة العربية السعودية من شريك اودو المعتمد" />
+    <meta property="og:type" content="website" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://todoops.com/services" />
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  </Fragment>
+
+  <Header lang="ar" />
+  
+  <main class="py-20 bg-white min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="mb-8" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2 rtl:space-x-reverse text-sm text-dark-600">
+          <li>
+            <a href="/" class="hover:text-odoo-purple transition-colors duration-200">الرئيسية</a>
+          </li>
+          <li>
+            <svg class="w-4 h-4 mx-2 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </li>
+          <li class="text-dark-900 font-medium">الخدمات</li>
+        </ol>
+      </nav>
+
+      <!-- Header Section -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl lg:text-5xl font-bold text-dark-900 mb-6">
+          خدمات اودو ERP في السعودية
+        </h1>
+        <p class="text-xl text-odoo-purple font-medium mb-6">
+          حلول اودو ERP المتخصصة من شريك معتمد
+        </p>
+        <p class="text-lg text-dark-600 max-w-4xl mx-auto leading-relaxed">
+          نحن شريك اودو المعتمد في المملكة العربية السعودية، نقدم خدمات تنفيذ اودو ERP الشاملة للشركات من جميع الاحجام. 
+          فريقنا من الخبراء المعتمدين يضمن تطبيق ناجح ومخصص لاحتياجات عملك الفريدة.
+        </p>
+      </div>
+
+      <!-- Why Choose Certified Partner Section -->
+      <div class="bg-gradient-to-br from-gray-50 to-odoo-accent/10 rounded-2xl p-8 mb-16">
+        <h2 class="text-3xl font-bold text-dark-900 text-center mb-8">
+          لماذا تختار شريك اودو المعتمد؟
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div class="w-16 h-16 bg-odoo-accent/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">خبرة معتمدة</h3>
+            <p class="text-dark-600">فريق من الخبراء المعتمدين من اودو مع سنوات من الخبرة في التطبيق الناجح</p>
+          </div>
+          <div class="text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">تطبيق سريع</h3>
+            <p class="text-dark-600">منهجية مجربة تضمن تطبيق سريع وفعال مع تقليل وقت التوقف</p>
+          </div>
+          <div class="text-center">
+            <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3">دعم مستمر</h3>
+            <p class="text-dark-600">دعم تقني مستمر وصيانة دورية لضمان عمل النظام بافضل كفاءة</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Services Grid -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-dark-900 text-center mb-12">
+          خدماتنا المتخصصة
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group">
+              <div class={`w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-200 ${
+                index % 4 === 0 ? 'bg-odoo-accent/20' :
+                index % 4 === 1 ? 'bg-green-100' :
+                index % 4 === 2 ? 'bg-blue-100' : 'bg-orange-100'
+              }`}>
+                <svg class={`w-8 h-8 ${
+                  index % 4 === 0 ? 'text-odoo-purple' :
+                  index % 4 === 1 ? 'text-green-600' :
+                  index % 4 === 2 ? 'text-blue-600' : 'text-orange-600'
+                }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <Fragment set:html={getIcon(service.icon)} />
+                </svg>
+              </div>
+              
+              <h3 class="text-xl font-bold text-dark-900 mb-4">
+                <a href={`/services/${service.slug}`} class="hover:text-odoo-purple transition-colors duration-200">
+                  {service.title}
+                </a>
+              </h3>
+              
+              <p class="text-dark-600 mb-6 leading-relaxed">
+                {service.description}
+              </p>
+              
+              <ul class="space-y-2 mb-6">
+                {service.features.map((feature) => (
+                  <li class="flex items-center space-x-2 rtl:space-x-reverse">
+                    <div class="w-4 h-4 bg-odoo-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <svg class="w-2 h-2 text-odoo-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                    </div>
+                    <span class="text-dark-700 text-sm font-medium">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <a 
+                href={`/services/${service.slug}`}
+                class="inline-flex items-center text-odoo-purple hover:text-purple-800 font-medium transition-colors duration-200"
+              >
+                اعرف المزيد
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="bg-gradient-to-r from-odoo-purple to-purple-800 rounded-2xl p-8 text-white text-center">
+        <h2 class="text-3xl font-bold mb-4">
+          هل انت مستعد لتحويل عملك مع اودو ERP؟
+        </h2>
+        <p class="text-xl mb-6 text-purple-100">
+          احصل على استشارة مجانية من خبرائنا المعتمدين واكتشف كيف يمكن لاودو ان يحسن عمليات شركتك
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a 
+            href="/contact"
+            class="inline-flex items-center bg-white text-odoo-purple px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-200 shadow-lg"
+          >
+            احجز استشارة مجانية
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </a>
+          <a 
+            href="/faq"
+            class="inline-flex items-center border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-odoo-purple transition-all duration-200"
+          >
+            الاسئلة الشائعة
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer lang="ar" />
+</Layout>
+
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

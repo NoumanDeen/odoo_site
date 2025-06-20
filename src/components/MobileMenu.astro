@@ -1,0 +1,263 @@
+---
+export interface Props {
+  lang: 'ar' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const content = {
+  ar: {
+    close: 'اغلاق',
+    nav: {
+      home: 'الرئيسية',
+      about: 'عن الشركة',
+      services: 'الخدمات',
+      industries: 'الصناعات',
+      odooApps: 'تطبيقات اودو',
+      blog: 'المدونة',
+      contact: 'تواصل معنا'
+    },
+    services: {
+      title: 'خدماتنا',
+      items: [
+        { name: 'تنفيذ اودو ERP الكامل', href: '/services/odoo-implementation' },
+        { name: 'تحليل الاعمال وجمع المتطلبات', href: '/services/business-analysis' },
+        { name: 'تنفيذ اودو وتكوين الوحدات', href: '/services/module-configuration' },
+        { name: 'التخصيص والتطوير', href: '/services/customization-development' },
+        { name: 'نقل البيانات', href: '/services/data-migration' },
+        { name: 'الاستضافة والبنية التحتية', href: '/services/hosting-infrastructure' },
+        { name: 'التدريب والتوثيق', href: '/services/training-documentation' },
+        { name: 'الدعم والصيانة', href: '/services/support-maintenance' },
+        { name: 'الاستشارات والتحسين', href: '/services/consultancy-optimization' },
+        { name: 'تطوير المواقع والتجارة الالكترونية', href: '/services/website-ecommerce' }
+      ]
+    },
+    odooApps: {
+      title: 'تطبيقات اودو',
+      items: [
+        { name: 'المبيعات', href: '/odoo-apps/sales' },
+        { name: 'المالية', href: '/odoo-apps/finance' },
+        { name: 'المخزون والتصنيع', href: '/odoo-apps/inventory' },
+        { name: 'الموارد البشرية', href: '/odoo-apps/hr' },
+        { name: 'التسويق', href: '/odoo-apps/marketing' },
+        { name: 'الموقع الالكتروني', href: '/odoo-apps/website' },
+        { name: 'الانتاجية', href: '/odoo-apps/productivity' },
+        { name: 'الخدمات', href: '/odoo-apps/services' },
+        { name: 'التخصيص', href: '/odoo-apps/customization' }
+      ]
+    },
+    cta: 'احجز استشارة مجانية'
+  },
+  en: {
+    close: 'Close',
+    nav: {
+      home: 'Home',
+      about: 'About',
+      services: 'Services',
+      industries: 'Industries',
+      odooApps: 'Odoo Apps',
+      blog: 'Blog',
+      contact: 'Contact'
+    },
+    services: {
+      title: 'Our Services',
+      items: [
+        { name: 'Full Odoo ERP Implementation', href: '/en/services/odoo-implementation' },
+        { name: 'Business Analysis & Requirements', href: '/en/services/business-analysis' },
+        { name: 'Module Configuration', href: '/en/services/module-configuration' },
+        { name: 'Customization & Development', href: '/en/services/customization-development' },
+        { name: 'Data Migration', href: '/en/services/data-migration' },
+        { name: 'Hosting & Infrastructure', href: '/en/services/hosting-infrastructure' },
+        { name: 'Training & Documentation', href: '/en/services/training-documentation' },
+        { name: 'Support & Maintenance', href: '/en/services/support-maintenance' },
+        { name: 'Consultancy & Optimization', href: '/en/services/consultancy-optimization' },
+        { name: 'Website & eCommerce', href: '/en/services/website-ecommerce' }
+      ]
+    },
+    odooApps: {
+      title: 'Odoo Apps',
+      items: [
+        { name: 'Sales', href: '/en/odoo-apps/sales' },
+        { name: 'Finance', href: '/en/odoo-apps/finance' },
+        { name: 'Inventory & Manufacturing', href: '/en/odoo-apps/inventory' },
+        { name: 'Human Resources', href: '/en/odoo-apps/hr' },
+        { name: 'Marketing', href: '/en/odoo-apps/marketing' },
+        { name: 'Website', href: '/en/odoo-apps/website' },
+        { name: 'Productivity', href: '/en/odoo-apps/productivity' },
+        { name: 'Services', href: '/en/odoo-apps/services' },
+        { name: 'Customization', href: '/en/odoo-apps/customization' }
+      ]
+    },
+    cta: 'Book Free Consultation'
+  }
+};
+
+const t = content[lang];
+---
+
+<div id="mobile-menu" class="fixed inset-0 bg-dark-900 bg-opacity-90 z-50 hidden">
+  <div class={`bg-white h-full w-4/5 max-w-sm overflow-y-auto transform transition-transform duration-300 ${lang === 'ar' ? 'right-0' : 'left-0'}`}>
+    <div class="p-6">
+      <!-- Close button -->
+      <button id="close-menu" class="absolute top-4 right-4 rtl:right-auto rtl:left-4 text-dark-500 hover:text-odoo-purple">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+        <span class="sr-only">{t.close}</span>
+      </button>
+      
+      <!-- Mobile Navigation -->
+      <nav class="mt-8">
+        <ul class="space-y-4">
+          <li>
+            <a href={lang === 'ar' ? '/' : '/en'} class="block text-lg font-medium text-dark-900 hover:text-odoo-purple">
+              {t.nav.home}
+            </a>
+          </li>
+          <li>
+            <a href={lang === 'ar' ? '/about-us' : '/en/about-us'} class="block text-lg font-medium text-dark-900 hover:text-odoo-purple">
+              {t.nav.about}
+            </a>
+          </li>
+          <li>
+            <div class="mb-2">
+              <a href={lang === 'ar' ? '/services' : '/en/services'} class="block text-lg font-medium text-dark-900 hover:text-odoo-purple">
+                {t.nav.services}
+              </a>
+            </div>
+            <div class="pl-4 rtl:pl-0 rtl:pr-4 border-l rtl:border-l-0 rtl:border-r border-gray-200">
+              <p class="text-sm font-semibold text-dark-700 mb-2">{t.services.title}</p>
+              <ul class="space-y-2">
+                {t.services.items.map((service) => (
+                  <li>
+                    <a href={service.href} class="block text-sm text-dark-600 hover:text-odoo-purple">
+                      {service.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
+          <li>
+            <a href={lang === 'ar' ? '/industries' : '/en/industries'} class="block text-lg font-medium text-dark-900 hover:text-odoo-purple">
+              {t.nav.industries}
+            </a>
+          </li>
+          <li>
+            <div class="mb-2">
+              <a href={lang === 'ar' ? '/odoo-apps' : '/en/odoo-apps'} class="block text-lg font-medium text-dark-900 hover:text-odoo-purple">
+                {t.nav.odooApps}
+              </a>
+            </div>
+            <div class="pl-4 rtl:pl-0 rtl:pr-4 border-l rtl:border-l-0 rtl:border-r border-gray-200">
+              <p class="text-sm font-semibold text-dark-700 mb-2">{t.odooApps.title}</p>
+              <ul class="space-y-2">
+                {t.odooApps.items.map((app) => (
+                  <li>
+                    <a href={app.href} class="block text-sm text-dark-600 hover:text-odoo-purple">
+                      {app.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
+          <li>
+            <a href={lang === 'ar' ? '/blog' : '/en/blog'} class="block text-lg font-medium text-dark-900 hover:text-odoo-purple">
+              {t.nav.blog}
+            </a>
+          </li>
+          <li>
+            <a href={lang === 'ar' ? '/contact' : '/en/contact'} class="block text-lg font-medium text-dark-900 hover:text-odoo-purple">
+              {t.nav.contact}
+            </a>
+          </li>
+        </ul>
+      </nav>
+      
+      <!-- CTA Button -->
+      <div class="mt-8">
+        <a href={lang === 'ar' ? '/contact' : '/en/contact'} class="block w-full bg-odoo-purple text-white py-3 rounded-lg font-medium text-center hover:bg-purple-800 transition-colors duration-200">
+          {t.cta}
+        </a>
+      </div>
+      
+      <!-- Phone Number -->
+      <div class="mt-4 text-center">
+        <a href="tel:+966540676575" class="text-dark-700 hover:text-odoo-purple transition-colors duration-200">
+          {lang === 'ar' 
+            ? <span dir="ltr">+966 54 067 6575</span>
+            : '+966 54 067 6575'
+          }
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const closeMenu = document.getElementById('close-menu');
+    const menuContent = mobileMenu?.querySelector('div');
+    
+    if (mobileMenuButton && mobileMenu && closeMenu && menuContent) {
+      // Open menu
+      mobileMenuButton.addEventListener('click', function() {
+        mobileMenu.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+        
+        // Animate in
+        setTimeout(() => {
+          menuContent.classList.add('translate-x-0');
+        }, 10);
+      });
+      
+      // Close menu
+      closeMenu.addEventListener('click', function() {
+        menuContent.classList.remove('translate-x-0');
+        
+        // Wait for animation to finish before hiding
+        setTimeout(() => {
+          mobileMenu.classList.add('hidden');
+          document.body.classList.remove('overflow-hidden');
+        }, 300);
+      });
+      
+      // Close when clicking outside
+      mobileMenu.addEventListener('click', function(e) {
+        if (e.target === mobileMenu) {
+          menuContent.classList.remove('translate-x-0');
+          
+          setTimeout(() => {
+            mobileMenu.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+          }, 300);
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  #mobile-menu {
+    backdrop-filter: blur(4px);
+  }
+  
+  #mobile-menu > div {
+    transform: translateX(-100%);
+  }
+  
+  #mobile-menu > div.translate-x-0 {
+    transform: translateX(0);
+  }
+  
+  [dir="rtl"] #mobile-menu > div {
+    transform: translateX(100%);
+  }
+  
+  [dir="rtl"] #mobile-menu > div.translate-x-0 {
+    transform: translateX(0);
+  }
+</style>
